@@ -8,11 +8,6 @@ import Post from "@/models/Post";
 import "dotenv/config";
 import connect from "@/lib/mongodb";
 
-interface ScrapedArticle {
-  title: string;
-  href: string;
-}
-
 puppeteer.use(StealthPlugin());
 
 const readExistingArticles = async () => {
