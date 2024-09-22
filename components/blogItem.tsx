@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { remark } from "remark";
 import html from "remark-html";
 import { useParams } from "next/navigation";
@@ -11,7 +11,7 @@ function BlogItem() {
   const [article, setArticle] = useState({});
   const params = useParams();
 
-  const getPost = async () => {
+  const getPost = useCallback(async () => {
     try {
       const postResponse = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/posts/${params.slug}`
@@ -26,11 +26,11 @@ function BlogItem() {
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
-  };
+  }, [params.slug]);
 
   useEffect(() => {
     getPost();
-  }, []);
+  }, [getPost]);
 
   return (
     <div className="prose prose-xl prose-slate dark:prose-invert">
