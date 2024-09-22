@@ -1,5 +1,5 @@
-var cron = require("node-cron");
+import { NextResponse } from "next/server";
 
-cron.schedule("*/30 * * * *", () => {
-  console.log("running a task every 30 minutes");
-});
+export async function GET() {
+  return NextResponse.json({ message: "Hello World" });
+}
