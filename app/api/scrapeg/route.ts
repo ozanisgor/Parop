@@ -21,6 +21,11 @@ const scrapeGoogle = async () => {
         : puppeteer.executablePath(),
   });
 
+  console.log(
+    process.env.PUPPETEER_EXECUTABLE_PATH,
+    "********************************************PUPPETEER_EXECUTABLE_PATH********************************************"
+  );
+
   try {
     const page = await browser.newPage();
 
