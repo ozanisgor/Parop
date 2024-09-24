@@ -16,9 +16,11 @@
 FROM node:18-alpine AS base
 
 FROM ghcr.io/puppeteer/puppeteer:22.15.0
+
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
+ENV MONGO_URI ''
 
 # Install dependencies only when needed
 FROM base AS deps
