@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import Post from "@/models/Post";
 import "dotenv/config";
-import connect from "@/lib/mongodb";
+import connect from "@/app/api/mongodb";
 export async function GET() {
   await connect();
   try {

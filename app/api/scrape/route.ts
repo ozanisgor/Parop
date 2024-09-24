@@ -6,7 +6,7 @@ import cheerio from "cheerio";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Post from "@/models/Post";
 import "dotenv/config";
-import connect from "@/lib/mongodb";
+import connect from "@/app/api/mongodb";
 // puppeteer.use(StealthPlugin());
 import dotenv from "dotenv";
 
