@@ -5,8 +5,7 @@ FROM ghcr.io/puppeteer/puppeteer:22.15.0
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
-ARG MONGO_URI
-ENV MONGO_URI=$MONGO_URI
+
 
 
 # Install dependencies only when needed
@@ -51,6 +50,8 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+ARG MONGO_URI
+ENV MONGO_URI=$MONGO_URI
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED=1
 
