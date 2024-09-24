@@ -1,11 +1,23 @@
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
+import "dotenv/config";
 
 const scrapeGoogle = async () => {
   let fullTitle = ""; // Declare fullTitle outside of try block
 
   // Launch the browser and open a new blank page
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+  });
 
   try {
     const page = await browser.newPage();
