@@ -1,18 +1,3 @@
-# FROM ghcr.io/puppeteer/puppeteer:22.15.0
-
-# ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-#     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
-# ENV MONGO_URI=$MONGO_URI
-
-# WORKDIR /app
-
-# COPY package*.json ./
-# RUN npm ci
-# COPY . .
-
-# RUN npm run build
-# CMD ["npm", "run", "start"]
-
 FROM node:18-alpine AS base
 
 FROM ghcr.io/puppeteer/puppeteer:22.15.0
@@ -20,7 +5,9 @@ FROM ghcr.io/puppeteer/puppeteer:22.15.0
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
-ENV MONGO_URI ''
+ARG MONGO_URI
+ENV MONGO_URI=$MONGO_URI
+
 
 # Install dependencies only when needed
 FROM base AS deps
