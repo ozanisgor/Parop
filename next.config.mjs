@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   experimental: {
     serverComponentsExternalPackages: [
       "puppeteer",
@@ -7,9 +8,6 @@ const nextConfig = {
       "puppeteer-extra-plugin-stealth",
     ],
     serverMinification: false,
-  },
-  env: {
-    MONGO_URI: process.env.MONGO_URI,
   },
 };
 
