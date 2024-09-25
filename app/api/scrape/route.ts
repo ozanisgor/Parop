@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
-import puppeteer from "puppeteer-extra";
+import puppeteer from "puppeteer";
 import cheerio from "cheerio";
-import StealthPlugin from "puppeteer-extra-plugin-stealth";
+// import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Post from "@/models/Post";
 import "dotenv/config";
-import connect from "@/lib/mongodb";
+import connect from "@/app/api/mongodb";
+// puppeteer.use(StealthPlugin());
+import dotenv from "dotenv";
 
-puppeteer.use(StealthPlugin());
+dotenv.config();
 
 const readExistingArticles = async () => {
   try {
@@ -19,7 +21,6 @@ const readExistingArticles = async () => {
     return [];
   }
 };
-
 const scrapeArticles = async () => {
   const browser = await puppeteer.launch({ headless: true });
   try {
@@ -30,7 +31,6 @@ const scrapeArticles = async () => {
     const htmlContent = await page.content();
     const $ = cheerio.load(htmlContent);
     const scrapedArticles: { title: string; href: string }[] = [];
-
     $(".group.inline li").each((index, element) => {
       if (index < 1) {
         const title = $(element).find(".post-card-inline__title").text().trim();
@@ -49,7 +49,6 @@ const scrapeArticles = async () => {
     await browser.close();
   }
 };
-
 const processWithGemini = async (scrapedContent: string) => {
   console.log("Processing with Gemini...");
   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
@@ -58,12 +57,10 @@ const processWithGemini = async (scrapedContent: string) => {
   const result = await model.generateContent(prompt);
   return result.response.text();
 };
-
 const updateArticles = async () => {
   await connect();
   const existingArticles = await readExistingArticles();
   const scrapedArticles = await scrapeArticles();
-
   for (const scrapedArticle of scrapedArticles) {
     const found = existingArticles.some(
       (article) => article.title === scrapedArticle.title
@@ -96,24 +93,20 @@ const updateArticles = async () => {
     }
   }
 };
-
 export async function GET() {
   await updateArticles();
   return NextResponse.json({ message: "Articles updated successfully!" });
 }
-
 const extractTitle = (content: string): string | null => {
   const titleRegex = /^## (.*?)\n\n/;
   const match = content.match(titleRegex);
   return match ? match[1] : null;
 };
-
 const createSlug = (title: string | null): string | null => {
   if (!title) return null;
   title = title.replace(/['".,]/g, "");
   return title.toLowerCase().replace(/\s+/g, "-");
 };
-
 const wait = async () => {
   const getRandomWaitTime =
     Math.floor(Math.random() * (4000 - 5000 + 1)) + 4000;
