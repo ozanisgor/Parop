@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import Post from "@/models/Post";
-import "dotenv/config";
 import connect from "@/app/api/mongodb";
+import "dotenv/config";
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
