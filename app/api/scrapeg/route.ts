@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const scrapeGoogle = async () => {
   let fullTitle = ""; // Declare fullTitle outside of try block
