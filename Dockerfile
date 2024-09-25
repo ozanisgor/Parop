@@ -5,9 +5,17 @@ FROM ghcr.io/puppeteer/puppeteer:22.15.0
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
-ENV MONGO_URI=mongodb://your-hardcoded-mongo-uri
-
-
+ARG MONGO_URI
+ARG GOOGLE_API_KEY
+ARG DB_USERNAME
+ARG DB_PASSWORD
+ARG PORT
+ARG NEXT_PUBLIC_API_URL
+ARG SOURCE
+ARG SOURCE_URL
+ARG TAG
+ARG DB_STRING
+ARG PROMP
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -24,7 +32,22 @@ COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 #   else echo "Lockfile not found." && exit 1; \
 #   fi
 
-  RUN npm ci
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+
+ARG MONGO_URI
+ARG GOOGLE_API_KEY
+ARG DB_USERNAME
+ARG DB_PASSWORD
+ARG PORT
+ARG NEXT_PUBLIC_API_URL
+ARG SOURCE
+ARG SOURCE_URL
+ARG TAG
+ARG DB_STRING
+ARG PROMP
+
+RUN npm ci
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -44,6 +67,21 @@ COPY . .
 #   else echo "Lockfile not found." && exit 1; \
 #   fi
 
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+
+ARG MONGO_URI
+ARG GOOGLE_API_KEY
+ARG DB_USERNAME
+ARG DB_PASSWORD
+ARG PORT
+ARG NEXT_PUBLIC_API_URL
+ARG SOURCE
+ARG SOURCE_URL
+ARG TAG
+ARG DB_STRING
+ARG PROMP
+
 RUN npm run build
 
 # Production image, copy all the files and run next
@@ -53,6 +91,21 @@ WORKDIR /app
 ENV NODE_ENV=production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED=1
+
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+
+ARG MONGO_URI
+ARG GOOGLE_API_KEY
+ARG DB_USERNAME
+ARG DB_PASSWORD
+ARG PORT
+ARG NEXT_PUBLIC_API_URL
+ARG SOURCE
+ARG SOURCE_URL
+ARG TAG
+ARG DB_STRING
+ARG PROMP
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
