@@ -6,6 +6,7 @@ import cheerio from "cheerio";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
+import "dotenv/config";
 // puppeteer.use(StealthPlugin());
 
 const readExistingArticles = async () => {
