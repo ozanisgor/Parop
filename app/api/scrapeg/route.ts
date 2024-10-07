@@ -1,28 +1,23 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
-import "dotenv/config";
+import chromium from "@sparticuz/chromium-min";
+import puppeteer from "puppeteer-core";
 
 const scrapeGoogle = async () => {
   let fullTitle = ""; // Declare fullTitle outside of try block
 
+  const isLocal = !!process.env.CHROME_EXECUTABLE_PATH;
+
   // Launch the browser and open a new blank page
   const browser = await puppeteer.launch({
-    args: [
-      "--disable-setuid-sandbox",
-      "--no-sandbox",
-      "--single-process",
-      "--no-zygote",
-    ],
+    args: isLocal ? puppeteer.defaultArgs() : chromium.args,
+    defaultViewport: chromium.defaultViewport,
     executablePath:
-      process.env.NODE_ENV === "production"
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(),
+      process.env.CHROME_EXECUTABLE_PATH ||
+      (await chromium.executablePath(
+        "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar"
+      )),
+    headless: chromium.headless,
   });
-
-  console.log(
-    process.env.PUPPETEER_EXECUTABLE_PATH,
-    "********************************************PUPPETEER_EXECUTABLE_PATH********************************************"
-  );
 
   try {
     const page = await browser.newPage();

@@ -18,34 +18,34 @@ const readExistingArticles = async () => {
     return [];
   }
 };
-const scrapeArticles = async () => {
-  const browser = await puppeteer.launch({ headless: true });
-  try {
-    const page = await browser.newPage();
-    const url = `${process.env.SOURCE_URL}${process.env.TAG}`;
-    await page.goto(url, { waitUntil: "domcontentloaded" });
-    await page.waitForSelector(".group.inline");
-    const htmlContent = await page.content();
-    const $ = cheerio.load(htmlContent);
-    const scrapedArticles: { title: string; href: string }[] = [];
-    $(".group.inline li").each((index, element) => {
-      if (index < 1) {
-        const title = $(element).find(".post-card-inline__title").text().trim();
-        const href = $(element).find("a").attr("href");
-        if (title && href) {
-          scrapedArticles.push({ title, href });
-        }
-      }
-    });
-    await wait();
-    return scrapedArticles;
-  } catch (error) {
-    console.error("Error scraping articles:", error);
-    return [];
-  } finally {
-    await browser.close();
-  }
-};
+// const scrapeArticles = async () => {
+//   const browser = await puppeteer.launch({ headless: true });
+//   try {
+//     const page = await browser.newPage();
+//     const url = `${process.env.SOURCE_URL}${process.env.TAG}`;
+//     await page.goto(url, { waitUntil: "domcontentloaded" });
+//     await page.waitForSelector(".group.inline");
+//     const htmlContent = await page.content();
+//     const $ = cheerio.load(htmlContent);
+//     const scrapedArticles: { title: string; href: string }[] = [];
+//     $(".group.inline li").each((index, element) => {
+//       if (index < 1) {
+//         const title = $(element).find(".post-card-inline__title").text().trim();
+//         const href = $(element).find("a").attr("href");
+//         if (title && href) {
+//           scrapedArticles.push({ title, href });
+//         }
+//       }
+//     });
+//     await wait();
+//     return scrapedArticles;
+//   } catch (error) {
+//     console.error("Error scraping articles:", error);
+//     return [];
+//   } finally {
+//     await browser.close();
+//   }
+// };
 const processWithGemini = async (scrapedContent: string) => {
   console.log("Processing with Gemini...");
   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
@@ -54,44 +54,44 @@ const processWithGemini = async (scrapedContent: string) => {
   const result = await model.generateContent(prompt);
   return result.response.text();
 };
-const updateArticles = async () => {
-  await connect();
-  const existingArticles = await readExistingArticles();
-  const scrapedArticles = await scrapeArticles();
-  for (const scrapedArticle of scrapedArticles) {
-    const found = existingArticles.some(
-      (article) => article.title === scrapedArticle.title
-    );
-    if (!found) {
-      const browser = await puppeteer.launch({ headless: true });
-      const page = await browser.newPage();
-      await page.goto(`${process.env.SOURCE_URL}${scrapedArticle.href}`, {
-        waitUntil: "domcontentloaded",
-      });
-      const htmlContent = await page.content();
-      const $ = cheerio.load(htmlContent);
-      const scrapedContent: string[] = [];
-      $(
-        "div.post-content.relative p:not([class]):not(:has(strong)), blockquote, h2"
-      ).each((index, element) => {
-        scrapedContent.push($(element).text().trim());
-      });
-      await browser.close();
-      const newContent = await processWithGemini(scrapedContent.join("\n"));
-      const newTitle = extractTitle(newContent);
-      const newSlug = createSlug(newTitle);
-      await Post.create({
-        title: scrapedArticle.title,
-        titleTR: newTitle,
-        content: newContent,
-        link: scrapedArticle.href,
-        slug: newSlug,
-      });
-    }
-  }
-};
+// const updateArticles = async () => {
+//   await connect();
+//   const existingArticles = await readExistingArticles();
+//   const scrapedArticles = await scrapeArticles();
+//   for (const scrapedArticle of scrapedArticles) {
+//     const found = existingArticles.some(
+//       (article) => article.title === scrapedArticle.title
+//     );
+//     if (!found) {
+//       const browser = await puppeteer.launch({ headless: true });
+//       const page = await browser.newPage();
+//       await page.goto(`${process.env.SOURCE_URL}${scrapedArticle.href}`, {
+//         waitUntil: "domcontentloaded",
+//       });
+//       const htmlContent = await page.content();
+//       const $ = cheerio.load(htmlContent);
+//       const scrapedContent: string[] = [];
+//       $(
+//         "div.post-content.relative p:not([class]):not(:has(strong)), blockquote, h2"
+//       ).each((index, element) => {
+//         scrapedContent.push($(element).text().trim());
+//       });
+//       await browser.close();
+//       const newContent = await processWithGemini(scrapedContent.join("\n"));
+//       const newTitle = extractTitle(newContent);
+//       const newSlug = createSlug(newTitle);
+//       await Post.create({
+//         title: scrapedArticle.title,
+//         titleTR: newTitle,
+//         content: newContent,
+//         link: scrapedArticle.href,
+//         slug: newSlug,
+//       });
+//     }
+//   }
+// };
 export async function GET() {
-  await updateArticles();
+  // await updateArticles();
   return NextResponse.json({ message: "Articles updated successfully!" });
 }
 const extractTitle = (content: string): string | null => {

@@ -4,6 +4,7 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: [
       "puppeteer",
+      "puppeteer-core",
       "puppeteer-extra",
       "puppeteer-extra-plugin-stealth",
     ],
