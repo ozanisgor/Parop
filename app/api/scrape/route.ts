@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import chromium from "@sparticuz/chromium-min";
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer-extra";
+// import puppeteer from "puppeteer-core";
 import cheerio from "cheerio";
-// import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
 import "dotenv/config";
-// puppeteer.use(StealthPlugin());
+puppeteer.use(StealthPlugin());
 
 const readExistingArticles = async () => {
   try {
@@ -26,7 +27,7 @@ const scrapeArticles = async () => {
     executablePath: await chromium.executablePath(
       "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar"
     ),
-    headless: chromium.headless,
+    // headless: chromium.headless,
   });
   try {
     const page = await browser.newPage();
