@@ -32,10 +32,14 @@ const scrapeArticles = async () => {
     ),
     headless: chromium.headless,
   });
+  console.log("Browser launched successfully");
+
   try {
     const page = await browser.newPage();
     const url = `${process.env.SOURCE_URL}${process.env.TAG}`;
     await page.goto(url, { waitUntil: "domcontentloaded" });
+    console.log(`Navigated to URL: ${url}`);
+
     await page.waitForSelector(".group.inline");
     const htmlContent = await page.content();
     const $ = cheerio.load(htmlContent);
@@ -67,44 +71,67 @@ const processWithGemini = async (scrapedContent: string) => {
   return result.response.text();
 };
 const updateArticles = async () => {
-  console.log("Updating articles...");
-  await connect();
-  const existingArticles = await readExistingArticles();
-  const scrapedArticles = await scrapeArticles();
-  for (const scrapedArticle of scrapedArticles) {
-    const found = existingArticles.some(
-      (article) => article.title === scrapedArticle.title
+  try {
+    console.log("Updating articles...");
+    await connect();
+    const existingArticles = await readExistingArticles();
+    console.log(
+      "Existing articles fetched: ",
+      existingArticles[existingArticles.length - 1]
     );
-    if (!found) {
-      const browser = await puppeteer.launch({ headless: true });
-      const page = await browser.newPage();
-      await page.goto(`${process.env.SOURCE_URL}${scrapedArticle.href}`, {
-        waitUntil: "domcontentloaded",
-      });
-      const htmlContent = await page.content();
-      const $ = cheerio.load(htmlContent);
-      const scrapedContent: string[] = [];
-      $(
-        "div.post-content.relative p:not([class]):not(:has(strong)), blockquote, h2"
-      ).each((index, element) => {
-        scrapedContent.push($(element).text().trim());
-      });
-      await browser.close();
-      const newContent = await processWithGemini(scrapedContent.join("\n"));
-      const newTitle = extractTitle(newContent);
-      const newSlug = createSlug(newTitle);
-      await Post.create({
-        title: scrapedArticle.title,
-        titleTR: newTitle,
-        content: newContent,
-        link: scrapedArticle.href,
-        slug: newSlug,
-      });
+
+    const scrapedArticles = await scrapeArticles();
+    console.log("Scraped articles: ", scrapedArticles);
+
+    if (!scrapedArticles.length) {
+      console.log("No articles scraped.");
+      return;
     }
+
+    for (const scrapedArticle of scrapedArticles) {
+      const found = existingArticles.some(
+        (article) => article.title === scrapedArticle.title
+      );
+      if (!found) {
+        console.log(
+          `New article found: ${scrapedArticle.title}, scraping content...`
+        );
+        const browser = await puppeteer.launch({ headless: true });
+        const page = await browser.newPage();
+        await page.goto(`${process.env.SOURCE_URL}${scrapedArticle.href}`, {
+          waitUntil: "domcontentloaded",
+        });
+        const htmlContent = await page.content();
+        const $ = cheerio.load(htmlContent);
+        const scrapedContent: string[] = [];
+        $(
+          "div.post-content.relative p:not([class]):not(:has(strong)), blockquote, h2"
+        ).each((index, element) => {
+          scrapedContent.push($(element).text().trim());
+        });
+        await browser.close();
+        const newContent = await processWithGemini(scrapedContent.join("\n"));
+        const newTitle = extractTitle(newContent);
+        const newSlug = createSlug(newTitle);
+        await Post.create({
+          title: scrapedArticle.title,
+          titleTR: newTitle,
+          content: newContent,
+          link: scrapedArticle.href,
+          slug: newSlug,
+        });
+      } else {
+        console.log(`Article already exists: ${scrapedArticle.title}`);
+      }
+    }
+  } catch (error) {
+    console.error("Error updating articles:", error);
   }
 };
 export async function GET() {
+  console.log("GET request received, starting updateArticles...");
   await updateArticles();
+  console.log("Articles updated successfully!");
   return NextResponse.json({ message: "Articles updated successfully!" });
 }
 const extractTitle = (content: string): string | null => {
