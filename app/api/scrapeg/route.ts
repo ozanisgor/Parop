@@ -19,6 +19,23 @@ const scrapeGoogle = async () => {
     headless: chromium.headless,
   });
 
+  // separate for production and development
+  // let browser
+  // if (process.env.VERCEL_ENV === 'production') {
+  //   const executablePath = await chromium.executablePath()
+  //   browser = await puppeteerCore.launch({
+  //     executablePath,
+  //     args: chromium.args,
+  //     headless: chromium.headless,
+  //     defaultViewport: chromium.defaultViewport
+  //   })
+  // } else {
+  //   browser = await puppeteer.launch({
+  //     headless: 'new',
+  //     args: ['--no-sandbox', '--disable-setuid-sandbox']
+  //   })
+  // }
+
   try {
     const page = await browser.newPage();
 
