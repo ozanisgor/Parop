@@ -12,6 +12,7 @@ import "dotenv/config";
 puppeteer.use(StealthPlugin());
 
 const readExistingArticles = async () => {
+  console.log("Reading existing articles from MongoDB...");
   try {
     const existingArticles = await Post.find({});
     return existingArticles;
@@ -21,13 +22,15 @@ const readExistingArticles = async () => {
   }
 };
 const scrapeArticles = async () => {
+  console.log("Scraping articles...");
+
   const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(
       "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar"
     ),
-    // headless: chromium.headless,
+    headless: chromium.headless,
   });
   try {
     const page = await browser.newPage();
@@ -64,6 +67,7 @@ const processWithGemini = async (scrapedContent: string) => {
   return result.response.text();
 };
 const updateArticles = async () => {
+  console.log("Updating articles...");
   await connect();
   const existingArticles = await readExistingArticles();
   const scrapedArticles = await scrapeArticles();
