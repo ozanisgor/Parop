@@ -9,6 +9,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
 import "dotenv/config";
+
+// export const dynamic = "force-dynamic";
+
 puppeteer.use(StealthPlugin());
 
 const readExistingArticles = async () => {
@@ -132,7 +135,15 @@ export async function GET() {
   console.log("GET request received, starting updateArticles...");
   await updateArticles();
   console.log("Articles updated successfully!");
-  return NextResponse.json({ message: "Articles updated successfully!" });
+
+  const headers = {
+    "Cache-Control": "no-store",
+  };
+
+  return NextResponse.json(
+    { message: "Articles updated successfully!" },
+    { headers }
+  );
 }
 const extractTitle = (content: string): string | null => {
   const titleRegex = /^## (.*?)\n\n/;
