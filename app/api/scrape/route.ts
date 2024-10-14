@@ -10,7 +10,8 @@ import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
 import "dotenv/config";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"; // Ensures this route is dynamic
+export const revalidate = 0; // Disables caching
 
 puppeteer.use(StealthPlugin());
 
