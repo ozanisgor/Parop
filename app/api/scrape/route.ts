@@ -29,7 +29,7 @@ const scrapeArticles = async () => {
   console.log("Scraping articles...");
 
   const browser = await puppeteer.launch({
-    args: chromium.args,
+    args: [...chromium.args, "--no-sandbox"],
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(
       "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar"
