@@ -1,67 +1,79 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
-import "dotenv/config";
+import chromium from "@sparticuz/chromium-min";
+import puppeteer from "puppeteer-core";
 
-const scrapeGoogle = async () => {
-  let fullTitle = ""; // Declare fullTitle outside of try block
+// const scrapeGoogle = async () => {
+//   let fullTitle = ""; // Declare fullTitle outside of try block
 
-  // Launch the browser and open a new blank page
-  const browser = await puppeteer.launch({
-    args: [
-      "--disable-setuid-sandbox",
-      "--no-sandbox",
-      "--single-process",
-      "--no-zygote",
-    ],
-    executablePath:
-      process.env.NODE_ENV === "production"
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(),
-  });
+//   const isLocal = !!process.env.CHROME_EXECUTABLE_PATH;
 
-  console.log(
-    process.env.PUPPETEER_EXECUTABLE_PATH,
-    "********************************************PUPPETEER_EXECUTABLE_PATH********************************************"
-  );
+//   // Launch the browser and open a new blank page
+//   const browser = await puppeteer.launch({
+//     args: isLocal ? puppeteer.defaultArgs() : chromium.args,
+//     defaultViewport: chromium.defaultViewport,
+//     executablePath:
+//       process.env.CHROME_EXECUTABLE_PATH ||
+//       (await chromium.executablePath(
+//         "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar"
+//       )),
+//     headless: chromium.headless,
+//   });
 
-  try {
-    const page = await browser.newPage();
+//   // separate for production and development
+//   // let browser
+//   // if (process.env.VERCEL_ENV === 'production') {
+//   //   const executablePath = await chromium.executablePath()
+//   //   browser = await puppeteerCore.launch({
+//   //     executablePath,
+//   //     args: chromium.args,
+//   //     headless: chromium.headless,
+//   //     defaultViewport: chromium.defaultViewport
+//   //   })
+//   // } else {
+//   //   browser = await puppeteer.launch({
+//   //     headless: 'new',
+//   //     args: ['--no-sandbox', '--disable-setuid-sandbox']
+//   //   })
+//   // }
 
-    // Navigate the page to a URL.
-    await page.goto("https://developer.chrome.com/");
+//   try {
+//     const page = await browser.newPage();
 
-    // Set screen size.
-    await page.setViewport({ width: 1080, height: 1024 });
+//     // Navigate the page to a URL.
+//     await page.goto("https://developer.chrome.com/");
 
-    // Type into search box.
-    await page
-      .locator(".devsite-search-field")
-      .fill("automate beyond recorder");
+//     // Set screen size.
+//     await page.setViewport({ width: 1080, height: 1024 });
 
-    // Wait and click on first result.
-    await page.locator(".devsite-result-item-link").click();
+//     // Type into search box.
+//     await page
+//       .locator(".devsite-search-field")
+//       .fill("automate beyond recorder");
 
-    // Locate the full title with a unique string.
-    const textSelector = await page
-      .locator("text/Customize and automate")
-      .waitHandle();
+//     // Wait and click on first result.
+//     await page.locator(".devsite-result-item-link").click();
 
-    // Get the full title text content
-    fullTitle =
-      (await textSelector.evaluate((el) => el.textContent)) || "Default Title";
-  } catch (error) {
-    console.error("Error scraping Google:", error);
-  } finally {
-    await browser.close();
-  }
+//     // Locate the full title with a unique string.
+//     const textSelector = await page
+//       .locator("text/Customize and automate")
+//       .waitHandle();
 
-  return fullTitle; // Return the full title
-};
+//     // Get the full title text content
+//     fullTitle =
+//       (await textSelector.evaluate((el) => el.textContent)) || "Default Title";
+//   } catch (error) {
+//     console.error("Error scraping Google:", error);
+//   } finally {
+//     await browser.close();
+//   }
+
+//   return fullTitle; // Return the full title
+// };
 
 export async function GET() {
-  const fullTitle = await scrapeGoogle(); // Get the title from scrapeGoogle function
+  // const fullTitle = await scrapeGoogle(); // Get the title from scrapeGoogle function
   return NextResponse.json({
     message: "Google scraped successfully!",
-    title: fullTitle,
+    // title: fullTitle,
   });
 }
