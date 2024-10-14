@@ -100,7 +100,14 @@ const updateArticles = async () => {
         console.log(
           `New article found: ${scrapedArticle.title}, scraping content...`
         );
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({
+          args: [...chromium.args, "--no-sandbox"],
+          defaultViewport: chromium.defaultViewport,
+          executablePath: await chromium.executablePath(
+            "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar"
+          ),
+          headless: chromium.headless,
+        });
         const page = await browser.newPage();
         await page.goto(`${process.env.SOURCE_URL}${scrapedArticle.href}`, {
           waitUntil: "domcontentloaded",
