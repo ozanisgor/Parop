@@ -29,7 +29,7 @@ const scrapeArticles = async () => {
   console.log("Scraping articles...");
 
   const browser = await puppeteer.launch({
-    args: chromium.args,
+    args: [...chromium.args, "--no-sandbox"],
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(
       "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar"
@@ -100,7 +100,14 @@ const updateArticles = async () => {
         console.log(
           `New article found: ${scrapedArticle.title}, scraping content...`
         );
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({
+          args: [...chromium.args, "--no-sandbox"],
+          defaultViewport: chromium.defaultViewport,
+          executablePath: await chromium.executablePath(
+            "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar"
+          ),
+          headless: chromium.headless,
+        });
         const page = await browser.newPage();
         await page.goto(`${process.env.SOURCE_URL}${scrapedArticle.href}`, {
           waitUntil: "domcontentloaded",
@@ -134,17 +141,31 @@ const updateArticles = async () => {
 };
 export async function GET() {
   console.log("GET request received, starting updateArticles...");
-  await updateArticles();
-  console.log("Articles updated successfully!");
 
-  const headers = {
-    "Cache-Control": "no-store",
-  };
+  try {
+    await updateArticles();
+    console.log("Articles updated successfully!");
 
-  return NextResponse.json(
-    { message: "Articles updated successfully!" },
-    { headers }
-  );
+    const headers = {
+      "Cache-Control": "no-store",
+    };
+
+    return NextResponse.json(
+      { status: "success", message: "Articles updated successfully!" },
+      { headers, status: 200 }
+    );
+  } catch (error) {
+    console.error("Error updating articles:", error);
+
+    const headers = {
+      "Cache-Control": "no-store",
+    };
+
+    return NextResponse.json(
+      { status: "error", message: "Failed to update articles." },
+      { headers, status: 500 }
+    );
+  }
 }
 const extractTitle = (content: string): string | null => {
   const titleRegex = /^## (.*?)\n\n/;
