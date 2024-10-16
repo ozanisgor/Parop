@@ -141,17 +141,31 @@ const updateArticles = async () => {
 };
 export async function GET() {
   console.log("GET request received, starting updateArticles...");
-  await updateArticles();
-  console.log("Articles updated successfully!");
 
-  const headers = {
-    "Cache-Control": "no-store",
-  };
+  try {
+    await updateArticles();
+    console.log("Articles updated successfully!");
 
-  return NextResponse.json(
-    { message: "Articles updated successfully!" },
-    { headers }
-  );
+    const headers = {
+      "Cache-Control": "no-store",
+    };
+
+    return NextResponse.json(
+      { status: "success", message: "Articles updated successfully!" },
+      { headers, status: 200 }
+    );
+  } catch (error) {
+    console.error("Error updating articles:", error);
+
+    const headers = {
+      "Cache-Control": "no-store",
+    };
+
+    return NextResponse.json(
+      { status: "error", message: "Failed to update articles." },
+      { headers, status: 500 }
+    );
+  }
 }
 const extractTitle = (content: string): string | null => {
   const titleRegex = /^## (.*?)\n\n/;
