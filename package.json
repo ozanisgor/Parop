@@ -24,6 +24,7 @@
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "embla-carousel-react": "^8.5.1",
     "lucide-react": "^0.424.0",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.2",

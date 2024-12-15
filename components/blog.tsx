@@ -2,6 +2,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { MainCarousel } from "./MainCarousel";
 
 const Blog = () => {
   const [articles, setArticles] = useState([]);
@@ -22,7 +23,10 @@ const Blog = () => {
   };
 
   return (
-    <main>
+    <div className="w-full mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
+        <MainCarousel />
+      </div>
       <ul className="flex flex-col">
         {articles.map((article) => {
           const { titleTR, _id, createdAt } = article;
@@ -36,7 +40,7 @@ const Blog = () => {
           );
         })}
       </ul>
-    </main>
+    </div>
   );
 };
 
