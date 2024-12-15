@@ -57,7 +57,7 @@ export const NavPages = () => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-primary hover:bg-primary hover:text-secondary-foreground focus:bg-primary focus:text-primary-foreground data-[active]:bg-primary/50 data-[state=open]:bg-primary/50">
+          <NavigationMenuTrigger className="bg-transparent hover:bg-transparent hover:text-secondary-foreground focus:bg-transparent focus:text-primary-foreground data-[active]:bg-transparent data-[state=open]:bg-transparent">
             Makaleler
           </NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -76,7 +76,7 @@ export const NavPages = () => {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium transition-colors hover:bg-primary hover:text-secondary-foreground focus:bg-primary focus:text-primary-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-primary/50 data-[state=open]:bg-primary/50">
+            <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-transparent hover:text-secondary-foreground focus:bg-transparent focus:text-primary-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-transparent data-[state=open]:bg-transparent">
               İletişim
             </NavigationMenuLink>
           </Link>
