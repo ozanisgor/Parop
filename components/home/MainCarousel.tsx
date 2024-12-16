@@ -80,8 +80,8 @@ export function MainCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        {/* <CarouselPrevious className="left-3 2xl:left-5 w-8 h-8" />
+        <CarouselNext className="right-3 2xl:right-5 w-8 h-8" /> */}
       </Carousel>
     </div>
   );

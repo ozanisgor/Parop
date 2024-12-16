@@ -27,11 +27,13 @@ export const Navbar = () => {
 
   return (
     <div
-      className={`fixed ${
-        isScrolled ? "bg-primary" : "bg-transparent/40"
-      } w-full z-20 text-primary-foreground text-sm font-medium transition-colors duration-300 ease-in-out`}
+      className={`fixed w-full z-20 text-primary-foreground text-sm font-medium transition-colors duration-300 ease-in-out`}
     >
-      <div className="flex justify-between items-center mx-auto px-16 py-7 max-w-screen-2xl h-20">
+      <div
+        className={`${
+          isScrolled ? "bg-primary" : "bg-transparent/40"
+        } flex justify-between items-center mx-auto px-16 py-7 max-w-screen-2xl h-20`}
+      >
         <div className="">Logo</div>
         <div className="flex items-center">
           <div>
