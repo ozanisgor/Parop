@@ -1,3 +1,4 @@
+import { FeaturedPost } from "@/components/home/FeaturedPost";
 import LatestPosts from "@/components/home/latestPosts/LatestPosts";
 import { MainCarousel } from "@/components/home/MainCarousel";
 
@@ -8,6 +9,7 @@ export default function Home() {
         <MainCarousel />
       </div>
       <LatestPosts />
+      <FeaturedPost />
     </main>
   );
 }

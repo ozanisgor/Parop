@@ -24,7 +24,7 @@ const LatestPosts = () => {
   };
 
   return (
-    <Card className="max-w-screen-2xl w-full xl:px-16 lg:px-12 md:px-8 px-4 my-36 bg-primary-foreground">
+    <Card className="max-w-screen-2xl w-full xl:px-16 lg:px-12 md:px-8 px-4 my-36 bg-primary-foreground shadow-none border-0">
       <CardHeader className="pl-0">
         <CardTitle className="text-4xl font-bold text-primary">
           En Son Yazılar

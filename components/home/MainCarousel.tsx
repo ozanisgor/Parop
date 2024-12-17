@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { Separator } from "../ui/separator";
 
 export function MainCarousel() {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -37,20 +38,20 @@ export function MainCarousel() {
 
   return (
     <div className="mx-auto relative">
-      <div className="flex flex-col bottom-20 items-start absolute w-full z-10 left-16 max-md:hidden text-primary-foreground gap-2 max-w-lg">
+      <div className="flex flex-col bottom-20 items-start absolute w-full z-10 left-16 max-md:hidden text-primary-foreground gap-4 max-w-lg">
         <Badge
           variant="secondary"
           className="text-primary-foreground  py-1 px-3 uppercase hover:bg-secondary"
         >
           Ethereum
         </Badge>
-        <h2 className="text-2xl font-semibold">
+        <h2 className="text-4xl font-bold leading-snug">
           Dev Yatırım Fonu Ethereum ETF&apos;si İçin Önemli Bir Adım Attı
         </h2>
-
+        <Separator className="w-8" />
         <span>12.12.2024</span>
 
-        <div className="flex items-center w-full gap-2 mt-4">
+        <div className="flex items-center w-full gap-2 mt-16">
           {Array.from({ length: 5 }).map((_, index) => (
             <span
               key={index}
@@ -72,8 +73,8 @@ export function MainCarousel() {
                 <Image
                   src={img1}
                   alt={`Slide ${index + 1}`}
-                  width={1920}
-                  height={700}
+                  width={1440}
+                  height={600}
                   className="object-cover w-full h-full"
                 />
               </div>
