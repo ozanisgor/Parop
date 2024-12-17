@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Lora } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layouts/Navbar/Navbar";
+import { Navbar } from "@/components/layouts/navbar/Navbar";
 
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { Footer } from "@/components/layouts/footer/Footer";
 config.autoAddCss = false;
 
-const inter = Inter({ subsets: ["latin"] });
+const lora = Lora({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "iBlogger App",
@@ -21,9 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={lora.className}>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
