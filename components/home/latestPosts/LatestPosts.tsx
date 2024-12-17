@@ -17,7 +17,7 @@ const LatestPosts = () => {
       const postsResponse = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/posts`
       );
-      setArticles(postsResponse.data);
+      setArticles(postsResponse.data.slice(0, 8));
     } catch (error) {
       console.error("Error fetching data: ", error);
     }

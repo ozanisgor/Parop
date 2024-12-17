@@ -1,3 +1,4 @@
+import { EditorsPick } from "@/components/home/EditorsPick/EditorsPick";
 import { FeaturedPost } from "@/components/home/FeaturedPost";
 import LatestPosts from "@/components/home/latestPosts/LatestPosts";
 import { MainCarousel } from "@/components/home/MainCarousel";
@@ -10,6 +11,7 @@ export default function Home() {
       </div>
       <LatestPosts />
       <FeaturedPost />
+      <EditorsPick />
     </main>
   );
 }
