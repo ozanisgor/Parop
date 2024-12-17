@@ -5,6 +5,7 @@ import { NavPages } from "./NavPages";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import {
+  faFacebook,
   faSquareXTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
@@ -67,6 +68,12 @@ export const Navbar = () => {
               size="lg"
               className="text-primary-foreground hover:text-secondary-foreground cursor-pointer"
             />
+            <FontAwesomeIcon
+              icon={faFacebook}
+              size="lg"
+              className="text-primary-foreground hover:text-secondary-foreground cursor-pointer"
+            />
+
             {/* to add beat animation */}
             {/* <FontAwesomeIcon icon={faYoutube} beatFade /> */}
           </div>

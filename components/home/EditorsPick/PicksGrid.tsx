@@ -1,12 +1,19 @@
 import img from "@/public/images/editorsPick.jpg";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import { Roboto } from "next/font/google";
 
 type ArticleProps = {
   titleTR: string;
   _id: string;
   createdAt: string;
 };
+
+const roboto = Roboto({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const PicksGrid = ({ articles }: { articles: ArticleProps[] }) => {
   return (
@@ -18,19 +25,18 @@ export const PicksGrid = ({ articles }: { articles: ArticleProps[] }) => {
             <Image
               src={img}
               alt="blog"
-              className="rounded-md max-h-96 object-cover w-full "
+              className="rounded-md max-h-96 object-cover w-full brightness-75"
             />
             <Badge
-              variant="secondary"
-              className="absolute rounded-lg top-5 right-5 text-primary-foreground md:py-1 md:px-3 py-0 px-2 uppercase hover:bg-secondary md:text-xs text-[9px] leading-4 list-none"
+              className={`absolute bg-transparent/30 rounded-lg top-5 right-5 text-primary-foreground md:py-1 md:px-3 py-0 px-2 uppercase hover:bg-transparent/30 md:text-xs text-[9px] leading-4 list-none tracking-wider ${roboto.className}`}
             >
-              Ethereum
+              <span className="">Ethereum</span>
             </Badge>
             <div className="flex flex-col left-0 bottom-0 items-start absolute w-full max-w-xs z-10 text-primary-foreground lg:gap-4 gap-2 p-4 xl:p-10">
-              <span className="md:text-xs font-normal text-[9px] leading-4">
+              <span className="md:text-xs font-normal text-[9px] leading-4 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
                 12.12.2024
               </span>
-              <h2 className="text-lg font-bold leading-snug">
+              <h2 className="text-lg font-bold leading-snug drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
                 Dev Yatırım Fonu Ethereum ETF&apos;si İçin Önemli Bir Adım Attı
               </h2>
             </div>

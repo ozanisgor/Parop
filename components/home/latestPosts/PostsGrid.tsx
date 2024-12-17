@@ -18,7 +18,7 @@ export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
             <Image
               src={img}
               alt="blog"
-              className="rounded-md max-h-72 object-cover w-full "
+              className="rounded-md max-h-72 object-cover w-full"
             />
             <p className="text-xs font-normal text-secondary">{createdAt}</p>
             <Link href={`/${_id}`} className="font-bold text-lg text-secondary">

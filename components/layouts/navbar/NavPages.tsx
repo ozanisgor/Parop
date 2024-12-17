@@ -13,6 +13,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { Roboto } from "next/font/google";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -52,9 +53,15 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ];
 
+const roboto = Roboto({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const NavPages = () => {
   return (
-    <NavigationMenu>
+    <NavigationMenu className={roboto.className}>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="bg-transparent hover:bg-transparent hover:text-secondary-foreground focus:bg-transparent focus:text-primary-foreground data-[active]:bg-transparent data-[state=open]:bg-transparent">
