@@ -6,8 +6,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
@@ -45,13 +43,13 @@ export function MainCarousel() {
 
   return (
     <div className="mx-auto relative">
-      <div className="flex flex-col bottom-20 items-start absolute w-full z-10 left-16 max-md:hidden text-primary-foreground gap-4 max-w-lg">
+      <div className="flex flex-col lg:bottom-20 bottom-10 items-start absolute w-full z-10 md:left-16 left-4  text-primary-foreground gap-4 md:max-w-lg max-w-72">
         <Badge
-          className={`tracking-wider text-primary-foreground bg-transparent/30 rounded-lg py-1 px-3 uppercase hover:bg-transparent/30 ${roboto.className}`}
+          className={`tracking-wider text-primary-foreground bg-transparent/30 rounded-lg lg:py-1 lg:px-3 py-0 px-2 uppercase hover:bg-transparent/30 ${roboto.className}`}
         >
           <span className="">Ethereum</span>
         </Badge>
-        <h2 className="text-4xl font-bold leading-snug drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+        <h2 className="xl:text-4xl lg:text-3xl md:text-2xl text-sm font-bold lg:mt-2 xl:mt-3 mt-1 leading-snug drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
           Dev Yatırım Fonu Ethereum ETF&apos;si İçin Önemli Bir Adım Attı
         </h2>
         <Separator className="w-8" />
@@ -59,7 +57,7 @@ export function MainCarousel() {
           12.12.2024
         </span>
 
-        <div className="flex items-center w-full gap-2 mt-16">
+        <div className="flex items-center w-full gap-2 lg:mt-16 mt-4">
           {Array.from({ length: 5 }).map((_, index) => (
             <span
               key={index}
@@ -77,7 +75,7 @@ export function MainCarousel() {
         <CarouselContent>
           {Array.from({ length: 5 }).map((_, index) => (
             <CarouselItem key={index}>
-              <div className="relative top-0 left-0 w-full 2xl:h-[40rem] xl:h-[36rem] lg:h-[32rem] h-[26rem] z-0 cursor-pointer">
+              <div className="relative top-0 left-0 w-full 2xl:h-[40rem] xl:h-[36rem] lg:h-[32rem] md:h-[28rem] h-[24rem] z-0 cursor-pointer">
                 <Image
                   src={img1}
                   alt={`Slide ${index + 1}`}
