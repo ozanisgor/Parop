@@ -9,20 +9,20 @@ export const Footer = () => {
   return (
     <div className="flex flex-col justify-between w-full">
       <div className="bg-primary text-primary-foreground">
-        <div className="px-16 py-28 flex justify-between gap-36 max-w-screen-2xl mx-auto">
-          <div className="flex justify-center">
+        <div className="md:px-16 px-8 md:py-28 py-20 flex flex-col md:flex-row justify-between md:gap-36 gap-20 max-w-screen-2xl mx-auto">
+          <div className="flex md:justify-center justify-start">
             <Contact />
           </div>
-          <div className="flex justify-center">
+          <div className="flex md:justify-center justify-start">
             <Explore />
           </div>
-          <div className="flex justify-center">
+          <div className="flex md:justify-center justify-start">
             <Connections />
           </div>
         </div>
       </div>
       <div className="w-full bg-[#2d2f3e] text-primary-foreground">
-        <div className="max-w-screen-2xl mx-auto flex justify-between h-20 px-16 py-8 items-center">
+        <div className="max-w-screen-2xl mx-auto flex justify-between h-20 md:px-16 px-8 py-8 items-center">
           <p className="flex justify-start gap-2 text-sm font-bold">
             2024 | Ozan İşgör{" "}
             <Link href={"https://github.com/ozanisgor"}>
