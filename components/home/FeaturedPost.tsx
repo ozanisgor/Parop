@@ -12,7 +12,7 @@ const roboto = Roboto({
 
 export const FeaturedPost = () => {
   return (
-    <div className="relative max-w-screen-2xl mx-auto w-full mb-36">
+    <div className="relative max-w-screen-2xl mx-auto w-full max-lg:my-8 max-md:my-16">
       <div className="flex flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center absolute w-full text-primary-foreground md:gap-2 gap-1 max-w-xl px-4 z-10">
         <Badge
           className={`text-primary-foreground bg-transparent/30 rounded-lg md:py-1 md:px-3 py-0 px-2 uppercase hover:bg-transparent/30 md:text-xs text-[9px] leading-4 list-none tracking-wider ${roboto.className}`}
