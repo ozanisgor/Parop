@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layouts/navbar/Navbar";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { Footer } from "@/components/layouts/footer/Footer";
+import { MobileNav } from "@/components/layouts/navbar/MobileNavbar";
 config.autoAddCss = false;
 
 const lora = Lora({ subsets: ["latin"] });
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={lora.className}>
         <Navbar />
+        <MobileNav />
         {children}
         <Footer />
       </body>
