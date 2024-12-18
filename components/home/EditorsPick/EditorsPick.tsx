@@ -24,8 +24,8 @@ export const EditorsPick = () => {
   };
 
   return (
-    <Card className="max-w-screen-2xl w-full xl:px-16 lg:px-12 md:px-8 px-4 mb-36 bg-primary-foreground shadow-none border-0">
-      <CardHeader className="pl-0 md:mb-8 mb-4">
+    <Card className="max-w-screen-2xl w-full xl:px-16 lg:px-12 md:px-8 px-4 lg:mb-36 mb-20 bg-primary-foreground shadow-none border-0">
+      <CardHeader className="pl-0 md:mb-8 mb-4 max-md:pr-0 max-md:text-center">
         <CardTitle className="md:text-4xl text-3xl font-bold text-primary">
           Editörün Seçtikleri
         </CardTitle>

@@ -21,7 +21,7 @@ interface ExamplesNavProps extends React.HTMLAttributes<HTMLDivElement> {}
 export const PostsFilter = ({ className, ...props }: ExamplesNavProps) => {
   const pathname = usePathname();
   return (
-    <div className="relative flex flex-col md:flex-row items-center justify-between gap-5 mt-1 mb-7">
+    <div className="relative flex flex-col md:flex-row items-center justify-between md:gap-5 gap-2 mt-1 md:mb-7 mb-3">
       <ScrollArea className="max-w-[600px] lg:max-w-none">
         <div className={cn("flex items-center", className)} {...props}>
           <div className="flex items-center gap-5">

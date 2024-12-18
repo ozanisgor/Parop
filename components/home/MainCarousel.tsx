@@ -45,7 +45,7 @@ export function MainCarousel() {
     <div className="mx-auto relative">
       <div className="flex flex-col lg:bottom-20 bottom-10 items-start absolute w-full z-10 md:left-16 left-4  text-primary-foreground gap-4 md:max-w-lg max-w-72">
         <Badge
-          className={`tracking-wider text-primary-foreground bg-transparent/30 rounded-lg lg:py-1 lg:px-3 py-0 px-2 uppercase hover:bg-transparent/30 ${roboto.className}`}
+          className={`text-primary-foreground bg-transparent/30 rounded-lg md:py-1 md:px-3 py-0 px-2 uppercase hover:bg-transparent/30 md:text-xs text-[9px] leading-4 list-none tracking-wider ${roboto.className}`}
         >
           <span className="">Ethereum</span>
         </Badge>
