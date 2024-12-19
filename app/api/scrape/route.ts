@@ -174,8 +174,31 @@ const extractTitle = (content: string): string | null => {
 };
 const createSlug = (title: string | null): string | null => {
   if (!title) return null;
-  title = title.replace(/['".,]/g, "");
-  return title.toLowerCase().replace(/\s+/g, "-");
+
+  const turkishMap: { [key: string]: string } = {
+    ç: "c",
+    ğ: "g",
+    ı: "i",
+    ö: "o",
+    ş: "s",
+    ü: "u",
+    Ç: "C",
+    Ğ: "G",
+    İ: "I",
+    Ö: "O",
+    Ş: "S",
+    Ü: "U",
+  };
+
+  const slug = title
+    .split("")
+    .map((char) => turkishMap[char] || char)
+    .join("")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+
+  return slug;
 };
 const wait = async () => {
   const getRandomWaitTime =
