@@ -6,13 +6,14 @@ type ArticleProps = {
   titleTR: string;
   _id: string;
   createdAt: string;
+  content: string;
 };
 
 export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-y-12 gap-y-20">
       {articles.map((article) => {
-        const { titleTR, _id, createdAt } = article;
+        const { titleTR, _id, createdAt, content } = article;
         return (
           <div key={_id} className="flex flex-col gap-4">
             <Image
@@ -20,7 +21,13 @@ export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
               alt="blog"
               className="rounded-md max-h-72 object-cover w-full"
             />
-            <p className="text-xs font-normal text-secondary">{createdAt}</p>
+            <p className="text-xs font-normal text-secondary">
+              {new Intl.DateTimeFormat("tr-TR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              }).format(new Date(createdAt))}
+            </p>
             <Link href={`/${_id}`} className="font-bold text-lg text-secondary">
               <h2>{titleTR}</h2>
             </Link>

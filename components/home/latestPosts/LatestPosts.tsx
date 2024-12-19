@@ -19,7 +19,7 @@ const LatestPosts = async () => {
   const articles = await fetchLatestPosts();
 
   return (
-    <Card className="max-w-screen-2xl w-full xl:px-16 lg:px-12 md:px-8 px-4 xl:my-36 lg:my-24 md:my-16 my-8 bg-primary-foreground shadow-none border-0">
+    <Card className="max-w-screen-2xl w-full xl:px-16 lg:px-12 md:px-8 px-4 mt-20 bg-primary-foreground shadow-none border-0">
       <CardHeader className="pl-0 max-md:pr-0 max-md:text-center pb-2">
         <CardTitle className="md:text-4xl text-3xl font-bold text-primary">
           En Son Yazılar

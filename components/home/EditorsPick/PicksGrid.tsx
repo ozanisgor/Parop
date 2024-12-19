@@ -34,7 +34,11 @@ export const PicksGrid = ({ articles }: { articles: ArticleProps[] }) => {
             </Badge>
             <div className="flex flex-col left-0 top-1/2 transform -translate-y-1/4 items-start absolute w-full max-w-xs z-10 text-primary-foreground lg:gap-4 gap-2 p-4 xl:p-10">
               <span className="md:text-xs font-normal text-[9px] leading-4 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-                {createdAt}
+                {new Intl.DateTimeFormat("tr-TR", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                }).format(new Date(createdAt))}
               </span>
               <h2 className="text-lg font-bold leading-snug drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
                 {titleTR}
