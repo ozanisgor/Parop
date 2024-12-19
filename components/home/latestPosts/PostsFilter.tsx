@@ -1,3 +1,4 @@
+"use client";
 import { ScrollArea, ScrollBar } from "../../ui/scroll-area";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";

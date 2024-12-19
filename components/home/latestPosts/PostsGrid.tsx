@@ -10,7 +10,7 @@ type ArticleProps = {
 
 export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-y-12 gap-y-20">
       {articles.map((article) => {
         const { titleTR, _id, createdAt } = article;
         return (

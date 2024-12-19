@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     const posts = await Post.find({})
       .sort({ createdAt: -1 })
       .limit(8)
-      .select("titleTR slug content createdAt slug")
+      .select("titleTR slug content createdAt editorsPick")
       .lean();
 
     // Cache for 1 minute
