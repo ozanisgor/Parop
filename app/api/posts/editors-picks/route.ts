@@ -16,7 +16,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(posts, {
       headers: {
-        // Cache for 24 hours
         "Cache-Control": "public, max-age=3600, s-maxage=3600",
       },
     });

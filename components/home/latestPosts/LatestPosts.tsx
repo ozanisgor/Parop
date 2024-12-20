@@ -5,13 +5,13 @@ import { PostsGrid } from "./PostsGrid";
 
 export default async function LatestPosts() {
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/posts/latest`
-    // {
-    //   headers: {
-    //     "Cache-Control": "no-cache",
-    //     Pragma: "no-cache",
-    //   },
-    // }
+    `${process.env.NEXT_PUBLIC_API_URL}/api/posts/latest`,
+    {
+      headers: {
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+      },
+    }
   );
   const articles = await data.json();
 
