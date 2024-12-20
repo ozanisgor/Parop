@@ -3,6 +3,7 @@ import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
   await connect();
