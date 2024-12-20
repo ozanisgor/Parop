@@ -3,14 +3,14 @@ import { Card, CardHeader, CardTitle } from "../../ui/card";
 import { PostsFilter } from "./PostsFilter";
 import { PostsGrid } from "./PostsGrid";
 
+export const dynamic = "force-dynamic";
+
 export default async function LatestPosts() {
   const data = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/posts/latest`,
     {
-      headers: {
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
-      },
+      next: { revalidate: 0 },
+      cache: "no-store",
     }
   );
   const articles = await data.json();
