@@ -3,20 +3,17 @@ import { Card, CardHeader, CardTitle } from "../../ui/card";
 import { PostsFilter } from "./PostsFilter";
 import { PostsGrid } from "./PostsGrid";
 
-const fetchLatestPosts = async () => {
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/posts/latest`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching latest posts data: ", error);
-    return [];
-  }
-};
-
-const LatestPosts = async () => {
-  const articles = await fetchLatestPosts();
+export default async function LatestPosts() {
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/posts/latest`
+    // {
+    //   headers: {
+    //     "Cache-Control": "no-cache",
+    //     Pragma: "no-cache",
+    //   },
+    // }
+  );
+  const articles = await data.json();
 
   return (
     <Card className="max-w-screen-2xl w-full xl:px-16 lg:px-12 md:px-8 px-4 mt-20 bg-primary-foreground shadow-none border-0">
@@ -33,6 +30,4 @@ const LatestPosts = async () => {
       )}
     </Card>
   );
-};
-
-export default LatestPosts;
+}

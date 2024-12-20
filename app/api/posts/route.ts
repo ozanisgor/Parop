@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
-        .select("titleTR slug content createdAt slug")
+        .select("titleTR slug content createdAt")
         .lean(),
       Post.countDocuments(),
     ]);

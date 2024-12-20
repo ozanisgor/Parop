@@ -12,7 +12,6 @@ export default function Home() {
       <LatestPosts />
       <FeaturedPost />
       <EditorsPick />
-      {/* TODO */}
     </main>
   );
 }

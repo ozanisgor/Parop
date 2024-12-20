@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   await connect();
 
@@ -12,14 +14,13 @@ export async function GET(req: NextRequest) {
       .select("titleTR slug content createdAt editorsPick")
       .lean();
 
-    // Cache for 1 minute
-    // return NextResponse.json(posts, {
-    //   headers: {
-    //     "Cache-Control": "public, max-age=60",
-    //   },
-    // });
+    return NextResponse.json(posts, {
+      headers: {
+        "Cache-Control": "no-store, max-age=0",
+      },
+    });
 
-    return NextResponse.json(posts);
+    // return NextResponse.json(posts, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(
       { message: "Failed to fetch latest posts", error: error.message },
