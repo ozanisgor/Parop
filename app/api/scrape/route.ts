@@ -72,6 +72,8 @@ const processWithGemini = async (scrapedContent: string) => {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
   const prompt = `Read this '${scrapedContent}' ${process.env.PROMPT}`;
   const result = await model.generateContent(prompt);
+  console.log("Gemini result: ", result.response.text());
+
   return result.response.text();
 };
 const updateArticles = async () => {
@@ -120,6 +122,8 @@ const updateArticles = async () => {
         ).each((index, element) => {
           scrapedContent.push($(element).text().trim());
         });
+        console.log("Scraped content: ", scrapedContent);
+
         await browser.close();
         const newContent = await processWithGemini(scrapedContent.join("\n"));
         const newTitle = extractTitle(newContent);
@@ -168,12 +172,56 @@ export async function GET() {
   }
 }
 const extractTitle = (content: string): string | null => {
+  console.log("Extracting title...");
+
+  // // Array of regex patterns to match different title formats
+  // const titlePatterns = [
+  //   /^## (.*?)\n\n/, // Matches "## Title\n\n"
+  //   /^\*\*(.*?)\*\*/, // Matches "**Title**"
+  //   /^# (.*?)\n\n/, // Matches "# Title\n\n"
+  //   /^### (.*?)\n\n/, // Matches "### Title\n\n"
+  //   /^__(.*?)__/, // Matches "__Title__"
+  //   /^<h[1-6]>(.*?)<\/h[1-6]>/, // Matches HTML headings
+  // ];
+
+  // for (const pattern of titlePatterns) {
+  //   const match = content.match(pattern);
+  //   if (match && match[1]) {
+  //     // Clean up the extracted title by removing any remaining markdown characters
+  //     const cleanTitle = match[1]
+  //       .replace(/[#*_`]/g, "") // Remove any remaining markdown characters
+  //       .replace(/^\s+|\s+$/g, ""); // Trim whitespace
+
+  //     console.log("Title extracted:", cleanTitle);
+  //     return cleanTitle;
+  //   }
+  // }
+
+  // const firstLine = content
+  //   .split("\n")[0]
+  //   .replace(/[#*_`]/g, "")
+  //   .trim();
+
+  // if (firstLine) {
+  //   console.log("Using first line as title:", firstLine);
+  //   return firstLine;
+  // }
+
+  // console.log("No title found");
+  // return null;
+
   const titleRegex = /^## (.*?)\n\n/;
+  console.log("Title regex: ", titleRegex);
+
   const match = content.match(titleRegex);
   return match ? match[1] : null;
 };
 const createSlug = (title: string | null): string | null => {
+  console.log("Creating slug...");
+
   if (!title) return null;
+  // title = title.replace(/['".,]/g, "");
+  // return title.toLowerCase().replace(/\s+/g, "-");
 
   const turkishMap: { [key: string]: string } = {
     ç: "c",
