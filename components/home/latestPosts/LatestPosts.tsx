@@ -9,7 +9,7 @@ export default async function LatestPosts() {
   const data = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/posts/latest`,
     {
-      next: { revalidate: 0 },
+      // next: { revalidate: 0 },
       cache: "no-store",
     }
   );
