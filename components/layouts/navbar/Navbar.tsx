@@ -10,6 +10,7 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,7 +33,9 @@ export const Navbar = () => {
     >
       <div className={`${isScrolled ? "bg-primary" : "bg-transparent/40"}  `}>
         <div className="max-w-screen-2xl mx-auto flex justify-between items-center w-full px-16 py-7 lg:h-20 md:h-14">
-          <div className="">Logo</div>
+          <Link href={"/"} className="">
+            Logo
+          </Link>
           <div className="flex items-center">
             <div>
               <NavPages />
