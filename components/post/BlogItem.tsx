@@ -33,7 +33,7 @@ function BlogItem() {
   }, [getPost]);
 
   return (
-    <div className="prose prose-xl prose-slate dark:prose-invert">
+    <div className="prose xl:prose-xl lg:prose-lg md:prose-base prose-sm prose-slate dark:prose-invert lg:mt-24 mt-14 w-full xl:col-span-3 xl:col-start-2 col-span-5 col-start-1 mx-auto">
       <article>
         <section dangerouslySetInnerHTML={{ __html: postContentHtml }} />
       </article>
