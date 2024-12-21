@@ -211,9 +211,10 @@ const extractTitle = (content: string): string | null => {
   // return null;
 
   const titleRegex = /^## (.*?)\n\n/;
-  console.log("Title regex: ", titleRegex);
 
   const match = content.match(titleRegex);
+  console.log("Title extracted:", match ? match[1] : null);
+
   return match ? match[1] : null;
 };
 const createSlug = (title: string | null): string | null => {
