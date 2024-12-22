@@ -1,16 +1,21 @@
 "use client";
 import * as React from "react";
-import img1 from "@/public/images/mainSlider1.jpg";
-
+// import img1 from "@/public/images/btc/btc-1.jpeg";
+// import img2 from "@/public/images/btc/btc-2.jpeg";
+// import img3 from "@/public/images/btc/btc-3.jpeg";
+// import img4 from "@/public/images/btc/btc-4.jpeg";
+// import img5 from "@/public/images/btc/btc-5.webp";
+// import img6 from "@/public/images/btc/btc-6.webp";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { Separator } from "../ui/separator";
+import { Separator } from "../../ui/separator";
 import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
@@ -19,10 +24,23 @@ const roboto = Roboto({
   display: "swap",
 });
 
-export function MainCarousel() {
+type ArticleProps = {
+  titleTR: string;
+  _id: string;
+  createdAt: string;
+  content: string;
+};
+
+export default function CarouselComponent({
+  articles,
+}: {
+  articles: ArticleProps[];
+}) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
+
+  // const images = [img1, img2, img3, img4, img5, img6];
 
   React.useEffect(() => {
     if (!api) {
@@ -42,15 +60,25 @@ export function MainCarousel() {
   };
 
   return (
-    <div className="mx-auto">
-      <Carousel setApi={setApi} className="">
-        <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem key={index}>
+    <Carousel
+      opts={{
+        align: "start",
+        loop: true,
+      }}
+      plugins={[Autoplay({ delay: 5000, stopOnInteraction: true })]}
+      setApi={setApi}
+      className=""
+    >
+      <CarouselContent>
+        {articles.map((article, index) => {
+          const { titleTR, _id, createdAt, content } = article;
+
+          return (
+            <CarouselItem key={_id}>
               <div className="relative top-0 left-0 w-full 2xl:h-[40rem] xl:h-[36rem] lg:h-[32rem] md:h-[28rem] h-[24rem] z-0 cursor-pointer">
                 <Image
-                  src={img1}
-                  alt={`Slide ${index + 1}`}
+                  src={`/images/btc/btc-${index + 1}.jpeg`}
+                  alt={`${article.titleTR} blog resmi`}
                   width={1440}
                   height={600}
                   className="object-cover w-full h-full brightness-75"
@@ -59,19 +87,22 @@ export function MainCarousel() {
                   <Badge
                     className={`text-primary-foreground bg-transparent/30 rounded-lg md:py-1 md:px-3 py-0 px-2 uppercase hover:bg-transparent/30 md:text-xs text-[9px] leading-4 list-none tracking-wider ${roboto.className}`}
                   >
-                    <span className="">Ethereum</span>
+                    <span className="">Bitcoin</span>
                   </Badge>
                   <h2 className="xl:text-4xl lg:text-3xl md:text-2xl text-sm font-bold lg:mt-2 xl:mt-3 mt-1 leading-snug drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-                    Dev Yatırım Fonu Ethereum ETF&apos;si İçin Önemli Bir Adım
-                    Attı
+                    {titleTR}
                   </h2>
                   <Separator className="w-8" />
                   <span className="md:text-xs font-normal text-[9px] leading-4 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-                    12.12.2024
+                    {new Intl.DateTimeFormat("tr-TR", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    }).format(new Date(createdAt))}
                   </span>
 
                   <div className="flex items-center w-full gap-2 lg:mt-16 mt-4">
-                    {Array.from({ length: 5 }).map((_, index) => (
+                    {Array.from({ length: articles.length }).map((_, index) => (
                       <span
                         key={index}
                         className={`cursor-pointer ${
@@ -86,11 +117,11 @@ export function MainCarousel() {
                 </div>
               </div>
             </CarouselItem>
-          ))}
-        </CarouselContent>
-        {/* <CarouselPrevious className="left-3 2xl:left-5 w-8 h-8" />
-        <CarouselNext className="right-3 2xl:right-5 w-8 h-8" /> */}
-      </Carousel>
-    </div>
+          );
+        })}
+      </CarouselContent>
+      {/* <CarouselPrevious className="left-3 2xl:left-5 w-8 h-8" />
+      <CarouselNext className="right-3 2xl:right-5 w-8 h-8" /> */}
+    </Carousel>
   );
 }
