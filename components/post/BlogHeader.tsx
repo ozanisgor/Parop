@@ -1,5 +1,5 @@
 import Image from "next/image";
-import img1 from "@/public/images/blogHeader.jpg";
+import img1 from "@/public/images/btc-5.webp";
 import { Badge } from "../ui/badge";
 import { Roboto } from "next/font/google";
 import { Separator } from "../ui/separator";
@@ -16,8 +16,11 @@ export const BlogHeader = () => {
       <Image
         src={img1}
         alt="blog header image"
-        width={1440}
-        height={600}
+        fill
+        priority
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+        quality={85}
+        placeholder="blur"
         className="object-cover w-full h-full brightness-75"
       />
       <div className="flex flex-col lg:bottom-20 bottom-10 items-start absolute w-full z-10 md:left-16 left-4  text-primary-foreground gap-4 md:max-w-lg max-w-72">
