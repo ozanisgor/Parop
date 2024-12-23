@@ -20,11 +20,11 @@ const postSchema: Schema = new mongoose.Schema(
     },
     content: {
       type: String,
-      required: false,
+      required: true,
     },
     tags: {
       type: [String],
-      required: false,
+      required: true,
       default: [],
     },
     link: {
@@ -38,6 +38,11 @@ const postSchema: Schema = new mongoose.Schema(
     imageNum: {
       type: Number,
       required: true,
+    },
+    readingTime: {
+      type: String,
+      required: true,
+      default: "1 dakika",
     },
     // TODO: image upload
   },

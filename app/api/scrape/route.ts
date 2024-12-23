@@ -159,6 +159,7 @@ const updateArticles = async () => {
           link: scrapedArticle.href,
           slug: newSlug,
           imageNum: randomNumber,
+          readingTime: newContent.readingTime,
         });
       } else {
         console.log(`Article already exists: ${scrapedArticle.title}`);
