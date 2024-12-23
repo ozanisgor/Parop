@@ -1,5 +1,5 @@
 import Link from "next/link";
-import img from "@/public/images/blogImg.jpg";
+import img from "@/public/images/small-btc.jpeg";
 import Image from "next/image";
 
 type ArticleProps = {
