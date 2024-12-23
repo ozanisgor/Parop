@@ -70,11 +70,32 @@ const processWithGemini = async (scrapedContent: string) => {
   console.log("Processing with Gemini...");
   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
-  const prompt = `Read this '${scrapedContent}' ${process.env.PROMPT}`;
+  const prompt = `Read this news content: '${scrapedContent}' ${process.env.PROMPT}`;
   const result = await model.generateContent(prompt);
-  console.log("Gemini result: ", result.response.text());
+  const responseText = result.response.text();
+  console.log("Raw response from Gemini:", responseText);
 
-  return result.response.text();
+  try {
+    const cleanResponse = responseText
+      .replace(/```json\n?/g, "")
+      .replace(/```\n?/g, "")
+      .trim();
+    console.log("Cleaned response:", cleanResponse);
+    const parsedResponse = JSON.parse(cleanResponse);
+    if (!parsedResponse.content || !parsedResponse.tags) {
+      throw new Error("Invalid response structure from Gemini");
+    }
+    return parsedResponse;
+  } catch (error) {
+    console.error("Error parsing Gemini response:", error);
+    console.error("Raw response:", responseText);
+
+    return {
+      content: scrapedContent,
+      tags: ["genel"],
+      title: "Yeni Makale",
+    };
+  }
 };
 const updateArticles = async () => {
   try {
@@ -126,14 +147,18 @@ const updateArticles = async () => {
 
         await browser.close();
         const newContent = await processWithGemini(scrapedContent.join("\n"));
-        const newTitle = extractTitle(newContent);
+        console.log(newContent, "newContent");
+        const newTitle = extractTitleFromContent(newContent.content);
         const newSlug = createSlug(newTitle);
+        const randomNumber = Math.floor(Math.random() * 5) + 1;
         await Post.create({
           title: scrapedArticle.title,
           titleTR: newTitle,
-          content: newContent,
+          content: newContent.content,
+          tags: newContent.tags,
           link: scrapedArticle.href,
           slug: newSlug,
+          imageNum: randomNumber,
         });
       } else {
         console.log(`Article already exists: ${scrapedArticle.title}`);
@@ -171,52 +196,22 @@ export async function GET() {
     );
   }
 }
-const extractTitle = (content: string): string | null => {
-  console.log("Extracting title...");
+const extractTitleFromContent = (content: string): string => {
+  console.log("Extracting title from markdown content...");
 
-  // // Array of regex patterns to match different title formats
-  // const titlePatterns = [
-  //   /^## (.*?)\n\n/, // Matches "## Title\n\n"
-  //   /^\*\*(.*?)\*\*/, // Matches "**Title**"
-  //   /^# (.*?)\n\n/, // Matches "# Title\n\n"
-  //   /^### (.*?)\n\n/, // Matches "### Title\n\n"
-  //   /^__(.*?)__/, // Matches "__Title__"
-  //   /^<h[1-6]>(.*?)<\/h[1-6]>/, // Matches HTML headings
-  // ];
+  // Match both ## Title and ##Title formats
+  const h1Match = content.match(/^##\s*([^\n]+)/m);
 
-  // for (const pattern of titlePatterns) {
-  //   const match = content.match(pattern);
-  //   if (match && match[1]) {
-  //     // Clean up the extracted title by removing any remaining markdown characters
-  //     const cleanTitle = match[1]
-  //       .replace(/[#*_`]/g, "") // Remove any remaining markdown characters
-  //       .replace(/^\s+|\s+$/g, ""); // Trim whitespace
+  if (!h1Match) {
+    console.log("No title found in content, using default");
+    return "Yeni Makale";
+  }
 
-  //     console.log("Title extracted:", cleanTitle);
-  //     return cleanTitle;
-  //   }
-  // }
-
-  // const firstLine = content
-  //   .split("\n")[0]
-  //   .replace(/[#*_`]/g, "")
-  //   .trim();
-
-  // if (firstLine) {
-  //   console.log("Using first line as title:", firstLine);
-  //   return firstLine;
-  // }
-
-  // console.log("No title found");
-  // return null;
-
-  const titleRegex = /^## (.*?)\n\n/;
-
-  const match = content.match(titleRegex);
-  console.log("Title extracted:", match ? match[1] : null);
-
-  return match ? match[1] : null;
+  const title = h1Match[1].trim();
+  console.log("Extracted title:", title);
+  return title;
 };
+
 const createSlug = (title: string | null): string | null => {
   console.log("Creating slug...");
 

@@ -22,12 +22,21 @@ const postSchema: Schema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    tags: {
+      type: [String],
+      required: false,
+      default: [],
+    },
     link: {
       type: String,
       required: [true, "Please provide a link"],
     },
     slug: {
       type: String,
+      required: true,
+    },
+    imageNum: {
+      type: Number,
       required: true,
     },
     // TODO: image upload
