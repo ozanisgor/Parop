@@ -117,11 +117,11 @@ const updateArticles = async () => {
 
     for (const scrapedArticle of scrapedArticles) {
       const found = existingArticles.some(
-        (article) => article.title === scrapedArticle.title
+        (article) => article.link === scrapedArticle.href
       );
       if (!found) {
         console.log(
-          `New article found: ${scrapedArticle.title}, scraping content...`
+          `New article found: ${scrapedArticle.href}, scraping content...`
         );
         const browser = await puppeteer.launch({
           args: [...chromium.args, "--no-sandbox"],
@@ -162,7 +162,7 @@ const updateArticles = async () => {
           readingTime: newContent.readingTime,
         });
       } else {
-        console.log(`Article already exists: ${scrapedArticle.title}`);
+        console.log(`Article already exists: ${scrapedArticle.href}`);
       }
     }
   } catch (error) {
@@ -205,7 +205,9 @@ const extractTitleFromContent = (content: string): string => {
 
   if (!h1Match) {
     console.log("No title found in content, using default");
-    return "Yeni Makale";
+    throw new Error(
+      "No title found in content. Blog post cannot be created without a title."
+    );
   }
 
   const title = h1Match[1].trim();
@@ -217,8 +219,6 @@ const createSlug = (title: string | null): string | null => {
   console.log("Creating slug...");
 
   if (!title) return null;
-  // title = title.replace(/['".,]/g, "");
-  // return title.toLowerCase().replace(/\s+/g, "-");
 
   const turkishMap: { [key: string]: string } = {
     ç: "c",
