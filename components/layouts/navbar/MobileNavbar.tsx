@@ -76,13 +76,15 @@ export function MobileNav() {
   return (
     <div className="md:hidden block fixed w-full z-20 text-primary-foreground text-sm font-medium transition-colors duration-300 ease-in-out">
       <div className={`${isScrolled ? "bg-primary" : "bg-transparent/40"}`}>
-        <div className="flex justify-between items-center w-full px-4 py-2 h-10">
+        <div className="flex justify-between items-center w-full px-4 py-2 h-12">
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
             size="lg"
-            className="text-primary-foreground hover:text-secondary-foreground cursor-pointer"
+            className="text-primary-foreground hover:text-secondary-foreground cursor-pointer w-8"
           />
-          <div className="">Logo</div>
+          <Link href={"/"} className="">
+            Logo
+          </Link>
           <Drawer open={open} onOpenChange={onOpenChange}>
             <DrawerTrigger asChild className="">
               <Button
