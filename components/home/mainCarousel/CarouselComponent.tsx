@@ -43,15 +43,18 @@ export default function CarouselComponent({
     }
 
     setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
+    setCurrent(api.selectedScrollSnap());
 
     api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
+      setCurrent(api.selectedScrollSnap());
     });
   }, [api]);
 
   const handleSliderChange = (index: number) => {
-    setCurrent(index);
+    console.log(index, "index");
+    console.log(current, "current");
+    if (!api) return;
+    api.scrollTo(index);
   };
 
   return (
@@ -101,7 +104,7 @@ export default function CarouselComponent({
                       <span
                         key={index}
                         className={`cursor-pointer ${
-                          current - 1 === index
+                          current === index
                             ? "w-3 h-3 rounded-full bg-primary-foreground"
                             : "w-3 h-3 rounded-full bg-secondary-foreground"
                         }`}
