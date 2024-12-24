@@ -1,11 +1,5 @@
 "use client";
 import * as React from "react";
-// import img1 from "@/public/images/btc/btc-1.jpeg";
-// import img2 from "@/public/images/btc/btc-2.jpeg";
-// import img3 from "@/public/images/btc/btc-3.jpeg";
-// import img4 from "@/public/images/btc/btc-4.jpeg";
-// import img5 from "@/public/images/btc/btc-5.webp";
-// import img6 from "@/public/images/btc/btc-6.webp";
 import {
   Carousel,
   CarouselContent,
@@ -29,6 +23,7 @@ type ArticleProps = {
   _id: string;
   createdAt: string;
   content: string;
+  imageNum: number;
 };
 
 export default function CarouselComponent({
@@ -71,13 +66,13 @@ export default function CarouselComponent({
     >
       <CarouselContent>
         {articles.map((article, index) => {
-          const { titleTR, _id, createdAt, content } = article;
+          const { titleTR, _id, createdAt, imageNum } = article;
 
           return (
             <CarouselItem key={_id}>
               <div className="relative top-0 left-0 w-full 2xl:h-[40rem] xl:h-[36rem] lg:h-[32rem] md:h-[28rem] h-[24rem] z-0 cursor-pointer">
                 <Image
-                  src={`/images/btc/btc-${index + 1}.jpeg`}
+                  src={`/images/btc/btc-${imageNum}.jpeg`}
                   alt={`${article.titleTR} blog resmi`}
                   width={1440}
                   height={600}
