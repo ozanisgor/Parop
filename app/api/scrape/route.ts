@@ -150,7 +150,7 @@ const updateArticles = async () => {
         console.log(newContent, "newContent");
         const newTitle = extractTitleFromContent(newContent.content);
         const newSlug = createSlug(newTitle);
-        const randomNumber = Math.floor(Math.random() * 5) + 1;
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
         await Post.create({
           title: scrapedArticle.title,
           titleTR: newTitle,
