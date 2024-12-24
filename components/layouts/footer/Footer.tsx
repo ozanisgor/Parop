@@ -9,7 +9,7 @@ export const Footer = () => {
   return (
     <div className="flex flex-col justify-between w-full">
       <div className="bg-primary text-primary-foreground">
-        <div className="md:px-16 px-8 md:py-28 py-20 flex flex-col md:flex-row justify-between md:gap-36 gap-20 max-w-screen-2xl mx-auto">
+        <div className="md:px-16 px-8 py-20 flex flex-col md:flex-row justify-between md:gap-36 gap-20 max-w-screen-2xl mx-auto">
           <div className="flex md:justify-center justify-start">
             <Contact />
           </div>
