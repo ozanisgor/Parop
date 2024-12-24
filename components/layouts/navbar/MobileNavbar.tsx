@@ -7,6 +7,12 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -15,41 +21,52 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 
-const components: { title: string; href: string; description: string }[] = [
+const components: {
+  title: string;
+  href: string;
+  description: string;
+  disabled: boolean;
+}[] = [
   {
     title: "Bitcoin",
     href: "/articles/bitcoin",
     description:
       "A modal dialog that interrupts the user with important content and expects a response.",
+    disabled: false,
   },
   {
     title: "Ethereum",
     href: "/articles/ethereum",
     description:
       "For sighted users to preview content available behind a link.",
+    disabled: true,
   },
   {
     title: "Technology",
     href: "/articles/technology",
     description:
       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+    disabled: true,
   },
   {
     title: "Business",
     href: "/articles/business",
     description: "Visually or semantically separates content.",
+    disabled: true,
   },
   {
     title: "NFTs",
     href: "/articles/nft",
     description:
       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+    disabled: true,
   },
   {
     title: "Yatırım",
     href: "/articles/investments",
     description:
       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+    disabled: true,
   },
 ];
 
@@ -117,14 +134,29 @@ export function MobileNav() {
                       {components.map(
                         (item) =>
                           item.href && (
-                            <MobileLink
+                            <TooltipProvider
+                              delayDuration={100}
+                              // key={item.title}
                               key={item.href}
-                              href={item.href}
-                              onOpenChange={setOpen}
-                              className="hover:text-secondary-foreground"
                             >
-                              {item.title}
-                            </MobileLink>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <MobileLink
+                                    href={item.href}
+                                    onOpenChange={setOpen}
+                                    disabled={item.disabled}
+                                    className="hover:text-secondary-foreground"
+                                  >
+                                    {item.title}
+                                  </MobileLink>
+                                </TooltipTrigger>
+                                {item.disabled && (
+                                  <TooltipContent>
+                                    <p className="text-primary">Yakında</p>
+                                  </TooltipContent>
+                                )}
+                              </Tooltip>
+                            </TooltipProvider>
                           )
                       )}
                     </div>
@@ -166,27 +198,37 @@ interface MobileLinkProps extends LinkProps {
   onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
   className?: string;
+  disabled?: boolean;
 }
 
-function MobileLink({
-  href,
-  onOpenChange,
-  className,
-  children,
-  ...props
-}: MobileLinkProps) {
-  const router = useRouter();
-  return (
-    <Link
-      href={href}
-      onClick={() => {
-        router.push(href.toString());
-        onOpenChange?.(false);
-      }}
-      className={cn("text-base", className)}
-      {...props}
-    >
-      {children}
-    </Link>
-  );
-}
+const MobileLink = React.forwardRef<HTMLAnchorElement, MobileLinkProps>(
+  ({ href, onOpenChange, className, children, disabled, ...props }, ref) => {
+    const router = useRouter();
+    return (
+      <Link
+        ref={ref}
+        href={href}
+        onClick={(e) => {
+          if (disabled) {
+            e.preventDefault();
+            return;
+          }
+          router.push(href.toString());
+          onOpenChange?.(false);
+        }}
+        className={cn(
+          "text-base",
+          disabled
+            ? "cursor-not-allowed opacity-50"
+            : "hover:text-accent-foreground focus:text-accent-foreground",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </Link>
+    );
+  }
+);
+
+MobileLink.displayName = "MobileLink";

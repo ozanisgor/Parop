@@ -13,43 +13,60 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Roboto } from "next/font/google";
 
-const components: { title: string; href: string; description: string }[] = [
+const components: {
+  title: string;
+  href: string;
+  description: string;
+  disabled: boolean;
+}[] = [
   {
     title: "Bitcoin",
     href: "/articles/bitcoin",
     description:
       "A modal dialog that interrupts the user with important content and expects a response.",
+    disabled: false,
   },
   {
     title: "Ethereum",
     href: "/articles/ethereum",
     description:
       "For sighted users to preview content available behind a link.",
+    disabled: true,
   },
   {
     title: "Technology",
     href: "/articles/technology",
     description:
       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+    disabled: true,
   },
   {
     title: "Business",
     href: "/articles/business",
     description: "Visually or semantically separates content.",
+    disabled: true,
   },
   {
     title: "NFTs",
     href: "/articles/nft",
     description:
       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+    disabled: true,
   },
   {
     title: "Yatırım",
     href: "/articles/investments",
     description:
       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+    disabled: true,
   },
 ];
 
@@ -70,14 +87,25 @@ export const NavPages = () => {
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-primary-foreground">
               {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                  className="hover:bg-secondary-foreground hover:text-secondary text-secondary hover:text-primary-foreground"
-                >
-                  {/* {component.description} */}
-                </ListItem>
+                <TooltipProvider delayDuration={100} key={component.title}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <ListItem
+                        title={component.title}
+                        href={component.href}
+                        disabled={component.disabled}
+                        className="hover:bg-secondary-foreground text-secondary hover:text-primary-foreground"
+                      >
+                        {/* {component.description} */}
+                      </ListItem>
+                    </TooltipTrigger>
+                    {component.disabled && (
+                      <TooltipContent>
+                        <p className="text-primary">Yakında</p>
+                      </TooltipContent>
+                    )}
+                  </Tooltip>
+                </TooltipProvider>
               ))}
             </ul>
           </NavigationMenuContent>
@@ -96,17 +124,21 @@ export const NavPages = () => {
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"a"> & { disabled?: boolean }
+>(({ className, title, children, disabled, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+            disabled
+              ? "cursor-not-allowed opacity-50"
+              : "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
+          onClick={(e) => disabled && e.preventDefault()}
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
