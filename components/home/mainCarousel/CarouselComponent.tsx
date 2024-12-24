@@ -51,8 +51,6 @@ export default function CarouselComponent({
   }, [api]);
 
   const handleSliderChange = (index: number) => {
-    console.log(index, "index");
-    console.log(current, "current");
     if (!api) return;
     api.scrollTo(index);
   };
