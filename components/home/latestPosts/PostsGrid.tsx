@@ -1,5 +1,4 @@
 import Link from "next/link";
-import img from "@/public/images/small-btc.jpeg";
 import Image from "next/image";
 
 type ArticleProps = {
@@ -7,21 +6,28 @@ type ArticleProps = {
   _id: string;
   createdAt: string;
   content: string;
+  imageNum: number;
 };
 
 export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-y-14 gap-y-20">
       {articles.map((article) => {
-        const { titleTR, _id, createdAt, content } = article;
+        const { titleTR, _id, createdAt, imageNum = 1 } = article;
         return (
           <div key={_id} className="flex flex-col gap-2">
             <Link href={`/${_id}`}>
-              <Image
-                src={img}
-                alt="blog"
-                className="rounded-md max-h-72 object-cover w-full"
-              />
+              {imageNum && (
+                <Image
+                  src={`/images/btc/btc-${imageNum}.jpeg`}
+                  width={300}
+                  height={300}
+                  alt="blog image"
+                  placeholder="blur"
+                  blurDataURL={`/images/btc/btc-${imageNum}.jpeg`}
+                  className="rounded-md md:h-72 h-64 object-cover w-full max-h-72"
+                />
+              )}
             </Link>
             <p className="text-xs font-normal text-secondary mt-3">
               {new Intl.DateTimeFormat("tr-TR", {
