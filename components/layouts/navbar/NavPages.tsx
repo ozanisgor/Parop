@@ -90,14 +90,16 @@ export const NavPages = () => {
                 <TooltipProvider delayDuration={100} key={component.title}>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <ListItem
-                        title={component.title}
-                        href={component.href}
-                        disabled={component.disabled}
-                        className="hover:bg-secondary-foreground text-secondary hover:text-primary-foreground"
-                      >
-                        {/* {component.description} */}
-                      </ListItem>
+                      <div>
+                        <ListItem
+                          title={component.title}
+                          href={component.href}
+                          disabled={component.disabled}
+                          className="hover:bg-secondary-foreground text-secondary hover:text-primary-foreground"
+                        >
+                          {/* {component.description} */}
+                        </ListItem>
+                      </div>
                     </TooltipTrigger>
                     {component.disabled && (
                       <TooltipContent>
@@ -138,8 +140,7 @@ const ListItem = React.forwardRef<
               : "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
-          onClick={(e) => disabled && e.preventDefault()}
-          {...props}
+          {...(disabled ? { onClick: (e) => e.preventDefault() } : props)}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">

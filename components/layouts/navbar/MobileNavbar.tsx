@@ -136,19 +136,20 @@ export function MobileNav() {
                           item.href && (
                             <TooltipProvider
                               delayDuration={100}
-                              // key={item.title}
                               key={item.href}
                             >
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <MobileLink
-                                    href={item.href}
-                                    onOpenChange={setOpen}
-                                    disabled={item.disabled}
-                                    className="hover:text-secondary-foreground"
-                                  >
-                                    {item.title}
-                                  </MobileLink>
+                                  <div>
+                                    <MobileLink
+                                      href={item.href}
+                                      onOpenChange={setOpen}
+                                      disabled={item.disabled}
+                                      className="hover:text-secondary-foreground"
+                                    >
+                                      {item.title}
+                                    </MobileLink>
+                                  </div>
                                 </TooltipTrigger>
                                 {item.disabled && (
                                   <TooltipContent>
@@ -207,7 +208,7 @@ const MobileLink = React.forwardRef<HTMLAnchorElement, MobileLinkProps>(
     return (
       <Link
         ref={ref}
-        href={href}
+        href={disabled ? "#" : href} // Provide a fallback href for disabled state
         onClick={(e) => {
           if (disabled) {
             e.preventDefault();
@@ -223,7 +224,7 @@ const MobileLink = React.forwardRef<HTMLAnchorElement, MobileLinkProps>(
             : "hover:text-accent-foreground focus:text-accent-foreground",
           className
         )}
-        {...props}
+        {...(disabled ? {} : props)}
       >
         {children}
       </Link>
