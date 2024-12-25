@@ -7,13 +7,13 @@ import Link from "next/link";
 const examples = [
   {
     name: "Bitcoin",
-    code: "/bitcoin",
+    code: "/",
     hidden: false,
   },
   {
     name: "Ethereum",
     code: "/ethereum",
-    hidden: false,
+    hidden: true,
   },
 ];
 
@@ -26,10 +26,10 @@ export const PostsFilter = ({ className, ...props }: ExamplesNavProps) => {
       <ScrollArea className="max-w-[600px] lg:max-w-none">
         <div className={cn("flex items-center", className)} {...props}>
           <div className="flex items-center gap-5">
-            <ExampleLink
+            {/* <ExampleLink
               example={{ name: "Hepsi", code: "", hidden: false }}
               isActive={pathname === "/"}
-            />
+            /> */}
             {examples.map((example) => (
               <ExampleLink
                 key={example.code}
