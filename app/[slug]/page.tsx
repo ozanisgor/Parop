@@ -4,16 +4,33 @@ import { Separator } from "@/components/ui/separator";
 import { BlogFooter } from "@/components/post/BlogFooter";
 import EditorsPick from "@/components/home/EditorsPick/EditorsPick";
 
+interface Post {
+  _id: string;
+  titleTR: string;
+  tags: string[];
+  slug: string;
+  imageNum: number;
+  readingTime: string;
+  createdAt: string;
+  content: string;
+}
+
+async function getPost({ slug }: { slug: string }) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/posts/${slug}`
+  );
+
+  const post: Post = await res.json();
+  return post;
+}
+
 export default async function Page({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const slug = (await params).slug;
-  const data = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/posts/${slug}`
-  );
-  const blogPost = await data.json();
+  const slug = await params;
+  const blogPost = await getPost(slug);
 
   return (
     <main className="max-w-screen-2xl mx-auto">
@@ -43,7 +60,7 @@ export default async function Page({
           <Separator className="w-7 bg-secondary" />
           <span className="">{blogPost.readingTime}</span>
         </div>
-        <BlogItem />
+        <BlogItem blogPost={blogPost} />
       </div>
       <BlogFooter />
       <EditorsPick />

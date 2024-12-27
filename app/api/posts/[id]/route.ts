@@ -1,52 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
-import mongoose from "mongoose";
 import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
-import "dotenv/config";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   await connect();
+
+  const id = (await params).id;
+
   try {
-    const post = await Post.findById(params.id);
+    const post = await Post.findById(id)
+      .select(
+        "titleTR slug content createdAt editorsPick imageNum tags readingTime"
+      )
+      .lean();
     if (!post) {
       return NextResponse.json({ message: "Post not found" }, { status: 404 });
     }
-    return NextResponse.json(post);
+    return NextResponse.json(post, { status: 200 });
   } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
-  }
-}
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  await connect();
-  try {
-    const body = await req.json();
-    const post = await Post.findByIdAndUpdate(params.id, body, { new: true });
-    if (!post) {
-      return NextResponse.json({ message: "Post not found" }, { status: 404 });
-    }
-    return NextResponse.json(post);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
-  }
-}
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  await connect();
-  try {
-    const post = await Post.findByIdAndDelete(params.id);
-    if (!post) {
-      return NextResponse.json({ message: "Post not found" }, { status: 404 });
-    }
-    return NextResponse.json({ post, message: "Post deleted successfully" });
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to fetch post", error: error.message },
+      { status: 500 }
+    );
   }
 }
