@@ -44,6 +44,14 @@ const postSchema: Schema = new mongoose.Schema(
       required: true,
       default: "1 dakika",
     },
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
+    isEditorsPick: {
+      type: Boolean,
+      default: false,
+    },
     // TODO: image upload
   },
   { timestamps: true }
