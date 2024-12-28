@@ -4,14 +4,15 @@ import connect from "@/app/api/mongodb";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   await connect();
+  console.log(params, "params");
 
-  const id = (await params).id;
+  const blogSlug = (await params).slug;
 
   try {
-    const post = await Post.findById(id)
+    const post = await Post.findOne({ slug: blogSlug })
       .select(
         "titleTR slug content createdAt editorsPick imageNum tags readingTime"
       )

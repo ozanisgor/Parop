@@ -7,16 +7,17 @@ type ArticleProps = {
   createdAt: string;
   content: string;
   imageNum: number;
+  slug: string;
 };
 
 export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-y-14 gap-y-20">
       {articles.map((article) => {
-        const { titleTR, _id, createdAt, imageNum = 1 } = article;
+        const { titleTR, _id, createdAt, imageNum = 1, slug } = article;
         return (
           <div key={_id} className="flex flex-col gap-2">
-            <Link href={`/${_id}`}>
+            <Link href={`/${slug}`}>
               {imageNum && (
                 <Image
                   src={`/images/btc/btc-${imageNum}.jpeg`}
@@ -36,7 +37,10 @@ export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
                 year: "numeric",
               }).format(new Date(createdAt))}
             </p>
-            <Link href={`/${_id}`} className="font-bold text-lg text-secondary">
+            <Link
+              href={`/${slug}`}
+              className="font-bold text-lg text-secondary"
+            >
               <h2>{titleTR}</h2>
             </Link>
             {/* <p className="text-xs font-normal mt-auto text-secondary">
