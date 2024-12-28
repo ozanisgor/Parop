@@ -7,7 +7,6 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   await connect();
-  console.log(params, "params");
 
   const blogSlug = (await params).slug;
 

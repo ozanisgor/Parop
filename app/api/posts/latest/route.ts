@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
-import { log } from "console";
 
 export const dynamic = "force-dynamic";
 // export const revalidate = 0;
@@ -16,7 +15,7 @@ export async function GET(req: NextRequest) {
     const posts = await Post.find({})
       .sort({ createdAt: -1 })
       .limit(limit)
-      .select("titleTR slug content createdAt editorsPick imageNum")
+      .select("titleTR slug createdAt imageNum")
       .lean();
 
     // return NextResponse.json(posts, {

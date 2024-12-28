@@ -62,7 +62,7 @@ export default async function Page({
         </div>
         <BlogItem blogPost={blogPost} />
       </div>
-      <BlogFooter />
+      <BlogFooter tags={blogPost.tags} />
       <EditorsPick />
     </main>
   );
