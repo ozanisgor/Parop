@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Separator } from "../../ui/separator";
 import { Roboto } from "next/font/google";
+import blurPlaceholders from "@/lib/blurPlaceholders.json";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -23,7 +24,7 @@ type ArticleProps = {
   _id: string;
   createdAt: string;
   content: string;
-  imageNum: number;
+  imageNum: string;
 };
 
 export default function CarouselComponent({
@@ -34,8 +35,6 @@ export default function CarouselComponent({
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
-
-  // const images = [img1, img2, img3, img4, img5, img6];
 
   React.useEffect(() => {
     if (!api) {
@@ -77,6 +76,10 @@ export default function CarouselComponent({
                   alt={`${article.titleTR} blog resmi`}
                   width={1440}
                   height={600}
+                  placeholder="blur"
+                  blurDataURL={
+                    blurPlaceholders[imageNum as keyof typeof blurPlaceholders]
+                  }
                   className="object-cover w-full h-full brightness-75"
                 />
                 <div className="flex flex-col lg:bottom-20 bottom-10 items-start absolute w-full z-10 md:left-16 left-4  text-primary-foreground gap-4 md:max-w-lg max-w-72">
