@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     const posts = await Post.find({ isEditorsPick: true })
       .sort({ createdAt: -1 })
       .limit(8)
-      .select("titleTR slug createdAt isEditorsPick")
+      .select("titleTR slug createdAt isEditorsPick imageNum")
       .lean();
 
     return NextResponse.json(posts, {

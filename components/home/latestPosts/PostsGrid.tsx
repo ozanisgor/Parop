@@ -39,7 +39,7 @@ export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
             </p>
             <Link
               href={`/${slug}`}
-              className="font-bold text-lg text-secondary"
+              className="font-bold text-lg text-secondary my-auto"
             >
               <h2>{titleTR}</h2>
             </Link>

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Card, CardHeader, CardTitle } from "../../ui/card";
 import { PostsFilter } from "./PostsFilter";
 import { PostsGrid } from "./PostsGrid";

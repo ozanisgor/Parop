@@ -1,21 +1,9 @@
 import { Card, CardHeader, CardTitle } from "../../ui/card";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { PicksGrid } from "./PicksGrid";
 
-// const fetchEditorsPicks = async () => {
-//   try {
-//     const response = await axios.get(
-//       `${process.env.NEXT_PUBLIC_API_URL}/api/posts/editors-picks`
-//     );
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching editor's picks data: ", error);
-//     return [];
-//   }
-// };
+export const revalidate = 3600;
 
-const EditorsPick = async () => {
+export default async function EditorsPick() {
   const data = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/posts/editors-picks`
   );
@@ -31,6 +19,4 @@ const EditorsPick = async () => {
       <PicksGrid articles={articles} />
     </Card>
   );
-};
-
-export default EditorsPick;
+}
