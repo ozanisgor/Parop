@@ -1,12 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+import blurPlaceholders from "@/lib/blurPlaceholders.json";
 
 type ArticleProps = {
   titleTR: string;
   _id: string;
   createdAt: string;
   content: string;
-  imageNum: number;
+  imageNum: string;
   slug: string;
 };
 
@@ -14,7 +15,7 @@ export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-y-14 gap-y-20">
       {articles.map((article) => {
-        const { titleTR, _id, createdAt, imageNum = 1, slug } = article;
+        const { titleTR, _id, createdAt, imageNum = "1", slug } = article;
         return (
           <div key={_id} className="flex flex-col gap-2">
             <Link href={`/${slug}`}>
@@ -25,7 +26,9 @@ export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
                   height={300}
                   alt="blog image"
                   placeholder="blur"
-                  blurDataURL={`/images/btc/btc-${imageNum}.jpeg`}
+                  blurDataURL={
+                    blurPlaceholders[imageNum as keyof typeof blurPlaceholders]
+                  }
                   className="rounded-md md:h-72 h-64 object-cover w-full max-h-72"
                 />
               )}
@@ -43,10 +46,6 @@ export const PostsGrid = ({ articles }: { articles: ArticleProps[] }) => {
             >
               <h2>{titleTR}</h2>
             </Link>
-            {/* <p className="text-xs font-normal mt-auto text-secondary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              tristique, purus nec ultricies efficitur
-            </p> */}
           </div>
         );
       })}
