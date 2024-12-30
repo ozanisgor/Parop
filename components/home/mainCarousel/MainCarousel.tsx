@@ -1,23 +1,6 @@
 import { Suspense } from "react";
 import CarouselComponent from "./CarouselComponent";
-import { log } from "console";
 
-// async function getLatestPosts() {
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_API_URL}/api/posts/latest`,
-//     {
-//       next: {
-//         revalidate: 300, // Revalidate every 5 minutes
-//       },
-//     }
-//   );
-
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch posts");
-//   }
-
-//   return res.json();
-// }
 export const dynamic = "force-dynamic";
 
 async function MainCarousel() {
@@ -29,7 +12,6 @@ async function MainCarousel() {
     }
   );
   const articles = await data.json();
-  // const articles = await getLatestPosts();
 
   return (
     <div className="mx-auto">
