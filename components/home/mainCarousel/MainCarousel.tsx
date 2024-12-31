@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import CarouselComponent from "./CarouselComponent";
 
 export const dynamic = "force-dynamic";
@@ -15,9 +14,7 @@ async function MainCarousel() {
 
   return (
     <div className="mx-auto">
-      <Suspense fallback={<div>Loading...</div>}>
-        <CarouselComponent articles={articles} />
-      </Suspense>
+      <CarouselComponent articles={articles} />
     </div>
   );
 }

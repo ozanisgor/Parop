@@ -74,8 +74,7 @@ export default function CarouselComponent({
                 <Image
                   src={`/images/btc/btc-${imageNum}.jpeg`}
                   alt={`${article.titleTR} blog resmi`}
-                  width={1440}
-                  height={600}
+                  fill
                   placeholder="blur"
                   blurDataURL={
                     blurPlaceholders[imageNum as keyof typeof blurPlaceholders]

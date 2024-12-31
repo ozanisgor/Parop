@@ -3,13 +3,12 @@ import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
 
 export const dynamic = "force-dynamic";
-// export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
   await connect();
 
   const searchParams = req.nextUrl.searchParams;
-  const limit = parseInt(searchParams.get("limit") || "8");
+  const limit = parseInt(searchParams.get("limit") || "5");
 
   try {
     const posts = await Post.find({})
@@ -17,12 +16,6 @@ export async function GET(req: NextRequest) {
       .limit(limit)
       .select("titleTR slug createdAt imageNum")
       .lean();
-
-    // return NextResponse.json(posts, {
-    //   headers: {
-    //     "Cache-Control": "no-store, max-age=0",
-    //   },
-    // });
 
     return NextResponse.json(posts, { status: 200 });
   } catch (error: any) {

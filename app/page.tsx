@@ -6,7 +6,7 @@ import MainCarousel from "@/components/home/mainCarousel/MainCarousel";
 export default function Home() {
   return (
     <main className="flex w-full min-h-screen flex-col items-center justify-between max-w-screen-2xl mx-auto">
-      <div className="max-w-screen-2xl mx-auto">
+      <div className="max-w-screen-2xl mx-auto w-full">
         <MainCarousel />
       </div>
       <LatestPosts />
