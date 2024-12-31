@@ -30,7 +30,7 @@ function BlogItem({ blogPost }: { blogPost: Post }) {
   }, [blogPost.content]);
 
   return (
-    <div className="prose xl:prose-xl lg:prose-lg md:prose-base prose-sm prose-slate dark:prose-invert lg:mt-24 mt-14 w-full xl:col-span-3 xl:col-start-2 col-span-5 col-start-1 mx-auto prose-h2:mb-14">
+    <div className="prose xl:prose-xl lg:prose-lg md:prose-base prose-sm prose-slate dark:prose-invert lg:mt-24 mt-14 w-full xl:col-span-3 xl:col-start-2 col-span-5 col-start-1 mx-auto prose-h2:mb-12">
       <article>
         <section dangerouslySetInnerHTML={{ __html: postContentHtml }} />
       </article>

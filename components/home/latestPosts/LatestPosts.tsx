@@ -22,11 +22,7 @@ export default async function LatestPosts() {
         </CardTitle>
       </CardHeader>
       <PostsFilter />
-      {articles && articles.length > 0 ? (
-        <PostsGrid articles={articles} />
-      ) : (
-        <div>Yükleniyor</div>
-      )}
+      <PostsGrid articles={articles} />
     </Card>
   );
 }
