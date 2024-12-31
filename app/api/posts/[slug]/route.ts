@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -10,6 +12,7 @@ export async function GET(
 
   const blogSlug = (await params).slug;
 
+  // await delay(1000);
   try {
     const post = await Post.findOne({ slug: blogSlug })
       .select(

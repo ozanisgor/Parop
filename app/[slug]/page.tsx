@@ -3,6 +3,8 @@ import { BlogHeader } from "@/components/post/BlogHeader";
 import { Separator } from "@/components/ui/separator";
 import { BlogFooter } from "@/components/post/BlogFooter";
 import EditorsPick from "@/components/home/EditorsPick/EditorsPick";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 interface Post {
   _id: string;
@@ -24,13 +26,8 @@ async function getPost({ slug }: { slug: string }) {
   return post;
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const slug = await params;
-  const blogPost = await getPost(slug);
+async function BlogPost({ slug }: { slug: string }) {
+  const blogPost = await getPost({ slug });
 
   return (
     <main className="max-w-screen-2xl mx-auto">
@@ -65,5 +62,20 @@ export default async function Page({
       <BlogFooter tags={blogPost.tags} />
       <EditorsPick />
     </main>
+  );
+}
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const slug = await params;
+  const blogPost = await getPost(slug);
+
+  return (
+    <Suspense fallback={<Loading />}>
+      <BlogPost slug={slug.slug} />
+    </Suspense>
   );
 }
