@@ -1,5 +1,4 @@
 import { Card, CardHeader, CardTitle } from "../../ui/card";
-import { PostsFilter } from "./PostsFilter";
 import { PostsGrid } from "./PostsGrid";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +20,6 @@ export default async function LatestPosts() {
           En Son Yazılar
         </CardTitle>
       </CardHeader>
-      <PostsFilter />
       <PostsGrid articles={articles} />
     </Card>
   );

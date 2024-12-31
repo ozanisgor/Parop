@@ -24,7 +24,7 @@ export const PicksGrid = ({ articles }: { articles: ArticleProps[] }) => {
         const { titleTR, _id, createdAt, imageNum, slug } = article;
         return (
           <div key={_id} className="flex flex-col gap-4 relative">
-            <Link href={`/${slug}`}>
+            <Link href={`/blog/${slug}`}>
               <Image
                 src={`/images/btc/btc-${imageNum}.jpeg`}
                 width={384}

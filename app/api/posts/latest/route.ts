@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   await connect();
 
   const searchParams = req.nextUrl.searchParams;
-  const limit = parseInt(searchParams.get("limit") || "5");
+  const limit = parseInt(searchParams.get("limit") || "12");
 
   try {
     const posts = await Post.find({})

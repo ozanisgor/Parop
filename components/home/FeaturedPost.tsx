@@ -22,7 +22,7 @@ export const FeaturedPost = async () => {
         Öne Çıkan Yazı
       </h3>
       <Link
-        href={`/${slug}`}
+        href={`/blog/${slug}`}
         className="relative max-w-screen-2xl mx-auto w-full mt-20"
       >
         <div className="flex flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center absolute w-full text-primary-foreground md:gap-2 gap-1 max-w-xl px-4 z-10 backdrop-brightness-100 backdrop-blur-sm py-4">

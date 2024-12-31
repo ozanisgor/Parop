@@ -5,6 +5,7 @@ import { BlogFooter } from "@/components/post/BlogFooter";
 import EditorsPick from "@/components/home/EditorsPick/EditorsPick";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { notFound } from "next/navigation";
 
 interface Post {
   _id: string;
@@ -18,12 +19,20 @@ interface Post {
 }
 
 async function getPost({ slug }: { slug: string }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/posts/${slug}`
-  );
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/posts/${slug}`
+    );
 
-  const post: Post = await res.json();
-  return post;
+    if (!res.ok) {
+      notFound();
+    }
+
+    const post: Post = await res.json();
+    return post;
+  } catch (error: any) {
+    notFound();
+  }
 }
 
 async function BlogPost({ slug }: { slug: string }) {
@@ -71,8 +80,13 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const slug = await params;
-  const blogPost = await getPost(slug);
+  // const response = await fetch(
+  //   `${process.env.NEXT_PUBLIC_API_URL}/api/posts/${slug.slug}`
+  // );
 
+  // if (!response.ok) {
+  //   notFound();
+  // }
   return (
     <Suspense fallback={<Loading />}>
       <BlogPost slug={slug.slug} />

@@ -29,7 +29,7 @@ const components: {
 }[] = [
   {
     title: "Bitcoin",
-    href: "/articles/bitcoin",
+    href: "/blog",
     description:
       "A modal dialog that interrupts the user with important content and expects a response.",
     disabled: false,
