@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { Roboto } from "next/font/google";
 import { Separator } from "../ui/separator";
+import blurPlaceholders from "@/lib/blurPlaceholders.json";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -14,7 +15,7 @@ interface BlogHeaderProps {
   titleTR: string;
   tags: string[];
   slug: string;
-  imageNum: number;
+  imageNum: string;
   readingTime: string;
   createdAt: string;
 }
@@ -29,10 +30,10 @@ export const BlogHeader = ({ blogPost }: { blogPost: BlogHeaderProps }) => {
         alt="blog header image"
         fill
         priority
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-        quality={85}
         placeholder="blur"
-        blurDataURL={`/images/btc/btc-${imageNum}.jpeg`}
+        blurDataURL={
+          blurPlaceholders[imageNum as keyof typeof blurPlaceholders]
+        }
         className="object-cover w-full h-full brightness-75 pointer-events-none"
         draggable="false"
       />

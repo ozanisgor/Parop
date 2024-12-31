@@ -10,7 +10,7 @@ interface Post {
   content: string;
   tags: string[];
   slug: string;
-  imageNum: number;
+  imageNum: string;
   readingTime: string;
 }
 

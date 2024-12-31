@@ -11,7 +11,7 @@ interface Post {
   titleTR: string;
   tags: string[];
   slug: string;
-  imageNum: number;
+  imageNum: string;
   readingTime: string;
   createdAt: string;
   content: string;
