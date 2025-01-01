@@ -48,9 +48,8 @@ export const BlogHeader = ({ blogPost }: { blogPost: BlogHeaderProps }) => {
             className={`text-primary-foreground bg-transparent/30 rounded-lg md:py-1 md:px-3 py-0 px-2 uppercase hover:bg-transparent/30 md:text-xs text-[9px] leading-4 list-none tracking-wider ${roboto.className}`}
           >
             <span className="">
-              {tags && tags.length > 0 && tags[0] === "bitcoin"
-                ? tags[1]
-                : tags[0]}
+              {tags?.length > 0 &&
+                (tags[0] === "bitcoin" ? tags[1] || tags[0] : tags[0])}
             </span>
           </Badge>
         </div>
