@@ -27,6 +27,7 @@ export const FeaturedPost = async () => {
       >
         <div className="flex flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center absolute w-full text-primary-foreground md:gap-2 gap-1 max-w-xl px-4 z-10 backdrop-brightness-100 backdrop-blur-sm py-4">
           <Badge
+            lang="tr"
             className={`text-primary-foreground bg-transparent/25 rounded-lg md:py-1 md:px-3 py-0 px-2 uppercase hover:bg-transparent/25 md:text-xs text-[9px] leading-4 list-none tracking-wider ${roboto.className}`}
           >
             <span className="">{tags[0]}</span>

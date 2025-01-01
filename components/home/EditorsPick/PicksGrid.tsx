@@ -33,6 +33,7 @@ export const PicksGrid = ({ articles }: { articles: ArticleProps[] }) => {
                 className="rounded-md max-h-96 min-h-64 object-cover w-full brightness-75"
               />
               <Badge
+                lang="tr"
                 className={`absolute bg-transparent/30 rounded-lg top-5 right-5 text-primary-foreground md:py-1 md:px-3 py-0 px-2 uppercase hover:bg-transparent/30 md:text-xs text-[9px] leading-4 list-none tracking-wider ${roboto.className}`}
               >
                 <span className="">Bitcoin</span>

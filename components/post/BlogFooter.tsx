@@ -15,6 +15,7 @@ export const BlogFooter = ({ tags }: { tags: string[] }) => {
           <Badge
             variant="outline"
             className="border-secondary rounded-md uppercase text-secondary"
+            lang="tr"
           >
             Bitcoin
           </Badge>
@@ -25,6 +26,7 @@ export const BlogFooter = ({ tags }: { tags: string[] }) => {
                   key={index}
                   variant="outline"
                   className="border-secondary rounded-md uppercase text-secondary"
+                  lang="tr"
                 >
                   {tag}
                 </Badge>
