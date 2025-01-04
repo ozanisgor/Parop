@@ -4,6 +4,7 @@ import connect from "@/app/api/mongodb";
 
 export async function GET(req: NextRequest) {
   await connect();
+
   try {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") ?? "1");
@@ -11,17 +12,28 @@ export async function GET(req: NextRequest) {
       50,
       Math.max(1, parseInt(searchParams.get("limit") ?? "12"))
     );
+    const searchQuery = searchParams.get("q") ?? "";
 
     const skip = (page - 1) * limit;
 
+    let query: any = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { titleTR: { $regex: searchQuery, $options: "i" } },
+        { content: { $regex: searchQuery, $options: "i" } },
+        { tags: { $regex: searchQuery, $options: "i" } },
+      ];
+    }
+
     const [posts, total] = await Promise.all([
-      Post.find({})
+      Post.find(query)
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
-        .select("titleTR slug content createdAt")
+        .select("titleTR slug createdAt imageNum tags")
         .lean(),
-      Post.countDocuments(),
+      Post.countDocuments(query),
     ]);
 
     const totalPages = Math.ceil(total / limit);
