@@ -3,6 +3,7 @@ import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 import { Roboto } from "next/font/google";
 import Link from "next/link";
+import blurPlaceholders from "@/lib/blurPlaceholders.json";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -44,16 +45,15 @@ export const FeaturedPost = async () => {
             }).format(new Date(createdAt))}
           </span>
         </div>
-        <div className="w-full 2xl:h-[40rem] xl:h-[36rem] lg:h-[32rem] md:h-[28rem] h-[24rem] max-w-screen-2xl mx-auto select-none">
+        <div className="relative w-full 2xl:h-[40rem] xl:h-[36rem] lg:h-[32rem] md:h-[28rem] h-[24rem] max-w-screen-2xl mx-auto select-none">
           <Image
             src={`/images/btc/btc-${imageNum}.jpeg`}
-            alt="blog header image"
+            alt="öne çıkan yazı resmi"
             fill
-            priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-            quality={85}
             placeholder="blur"
-            blurDataURL={`/images/btc/btc-${imageNum}.jpeg`}
+            blurDataURL={
+              blurPlaceholders[imageNum as keyof typeof blurPlaceholders]
+            }
             className="object-cover w-full h-full brightness-75 pointer-events-none"
             draggable="false"
           />
