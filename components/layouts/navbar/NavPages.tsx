@@ -1,9 +1,8 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
+import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,7 +10,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import {
   Tooltip,
@@ -19,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 import { Roboto } from "next/font/google";
 
 const components: {
@@ -29,41 +28,41 @@ const components: {
 }[] = [
   {
     title: "Bitcoin",
-    href: "/blog",
+    href: "/blog?q=bitcoin",
     description:
       "A modal dialog that interrupts the user with important content and expects a response.",
     disabled: false,
   },
   {
     title: "Ethereum",
-    href: "/articles/ethereum",
+    href: "/blog?q=ethereum",
     description:
       "For sighted users to preview content available behind a link.",
-    disabled: true,
+    disabled: false,
   },
   {
-    title: "Technology",
-    href: "/articles/technology",
+    title: "ETF",
+    href: "/blog?q=etf",
     description:
       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-    disabled: true,
+    disabled: false,
   },
   {
-    title: "Business",
-    href: "/articles/business",
+    title: "Solana",
+    href: "/blog?q=solana",
     description: "Visually or semantically separates content.",
-    disabled: true,
+    disabled: false,
   },
   {
-    title: "NFTs",
-    href: "/articles/nft",
+    title: "NFT",
+    href: "/blog?q=nft",
     description:
       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-    disabled: true,
+    disabled: false,
   },
   {
     title: "Yatırım",
-    href: "/articles/investments",
+    href: "/blog?q=yatırım",
     description:
       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
     disabled: true,

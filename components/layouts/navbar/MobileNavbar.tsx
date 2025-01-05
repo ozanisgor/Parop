@@ -1,10 +1,10 @@
 "use client";
 
-import * as React from "react";
 import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
+import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerContent,
@@ -13,20 +13,20 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { cn } from "@/lib/utils";
 import {
   faFacebook,
   faSquareXTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const components: {
   title: string;
@@ -36,41 +36,41 @@ const components: {
 }[] = [
   {
     title: "Bitcoin",
-    href: "/blog",
+    href: "/blog?q=bitcoin",
     description:
       "A modal dialog that interrupts the user with important content and expects a response.",
     disabled: false,
   },
   {
     title: "Ethereum",
-    href: "/articles/ethereum",
+    href: "/blog?q=ethereum",
     description:
       "For sighted users to preview content available behind a link.",
-    disabled: true,
+    disabled: false,
   },
   {
-    title: "Technology",
-    href: "/articles/technology",
+    title: "ETF",
+    href: "/blog?q=etf",
     description:
       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-    disabled: true,
+    disabled: false,
   },
   {
-    title: "Business",
-    href: "/articles/business",
+    title: "Solana",
+    href: "/blog?q=solana",
     description: "Visually or semantically separates content.",
-    disabled: true,
+    disabled: false,
   },
   {
-    title: "NFTs",
-    href: "/articles/nft",
+    title: "NFT",
+    href: "/blog?q=nft",
     description:
       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-    disabled: true,
+    disabled: false,
   },
   {
     title: "Yatırım",
-    href: "/articles/investments",
+    href: "/blog?q=yatırım",
     description:
       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
     disabled: true,
