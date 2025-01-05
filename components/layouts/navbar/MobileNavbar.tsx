@@ -5,7 +5,14 @@ import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -126,10 +133,12 @@ export function MobileNav() {
               </Button>
             </DrawerTrigger>
             <DrawerContent className="max-h-[60svh] p-0 ">
-              <div className="overflow-auto p-6">
+              <DrawerHeader className="overflow-auto p-6">
                 <div className="flex flex-col space-y-6">
                   <div className="flex flex-col space-y-3">
-                    <h3 className="text-lg font-bold">Makaleler</h3>
+                    <DrawerTitle className="text-lg font-bold">
+                      Makaleler
+                    </DrawerTitle>
                     <div className="flex flex-col space-y-2">
                       {components.map(
                         (item) =>
@@ -140,7 +149,7 @@ export function MobileNav() {
                             >
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <div>
+                                  <DrawerDescription>
                                     <MobileLink
                                       href={item.href}
                                       onOpenChange={setOpen}
@@ -149,7 +158,7 @@ export function MobileNav() {
                                     >
                                       {item.title}
                                     </MobileLink>
-                                  </div>
+                                  </DrawerDescription>
                                 </TooltipTrigger>
                                 {item.disabled && (
                                   <TooltipContent>
@@ -186,7 +195,7 @@ export function MobileNav() {
                     {/* <FontAwesomeIcon icon={faYoutube} beatFade /> */}
                   </div>
                 </div>
-              </div>
+              </DrawerHeader>
             </DrawerContent>
           </Drawer>
         </div>
