@@ -151,16 +151,21 @@ const updateArticles = async () => {
         const newTitle = extractTitleFromContent(newContent.content);
         const newSlug = createSlug(newTitle);
         const randomNumber = Math.floor(Math.random() * 100) + 1;
-        await Post.create({
-          title: scrapedArticle.title,
-          titleTR: newTitle,
-          content: newContent.content,
-          tags: newContent.tags,
-          link: scrapedArticle.href,
-          slug: newSlug,
-          imageNum: randomNumber,
-          readingTime: newContent.readingTime,
-        });
+        try {
+          await Post.create({
+            title: scrapedArticle.title,
+            titleTR: newTitle,
+            content: newContent.content,
+            tags: newContent.tags,
+            description: newContent.description,
+            link: scrapedArticle.href,
+            slug: newSlug,
+            imageNum: randomNumber,
+            readingTime: newContent.readingTime,
+          });
+        } catch (error: any) {
+          console.error("Error saving post:", error);
+        }
       } else {
         console.log(`Article already exists: ${scrapedArticle.href}`);
       }

@@ -16,7 +16,7 @@ export async function GET(
   try {
     const post = await Post.findOne({ slug: blogSlug })
       .select(
-        "titleTR slug content createdAt editorsPick imageNum tags readingTime"
+        "titleTR slug content createdAt editorsPick imageNum tags readingTime description"
       )
       .lean();
     if (!post) {

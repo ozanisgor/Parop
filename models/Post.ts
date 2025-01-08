@@ -6,6 +6,7 @@ interface IPost extends Document {
   content: string;
   link: string;
   slug: string;
+  description: string;
 }
 
 const postSchema: Schema = new mongoose.Schema(
@@ -34,6 +35,10 @@ const postSchema: Schema = new mongoose.Schema(
     slug: {
       type: String,
       required: true,
+    },
+    description: {
+      type: String,
+      required: [true, "Description missing"],
     },
     imageNum: {
       type: Number,
