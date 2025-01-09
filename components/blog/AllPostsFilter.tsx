@@ -52,7 +52,7 @@ export const AllPostsFilter = ({ className, ...props }: ExamplesNavProps) => {
 
   return (
     <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between md:gap-5 gap-2 w-full max-w-lg">
-      <ScrollArea className="w-[calc(100vw-48px)] md:w-auto">
+      <ScrollArea className="w-[calc(100vw-48px)] md:w-auto" type="auto">
         <div className={cn("flex items-center", className)} {...props}>
           <div className="flex items-center gap-1">
             <TagLink
@@ -80,7 +80,7 @@ export const AllPostsFilter = ({ className, ...props }: ExamplesNavProps) => {
             ))}
           </div>
         </div>
-        <ScrollBar orientation="horizontal" className="invisible" />
+        <ScrollBar orientation="horizontal" className="pt-1" />
       </ScrollArea>
     </div>
   );
