@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -25,11 +25,10 @@ export default function Search({ placeholder }: { placeholder: string }) {
     }
 
     replace(`${pathname}?${params.toString()}`, { scroll: false });
-    setSearchTerm("");
   }, 700);
 
   return (
-    <div className="relative flex flex-1 flex-shrink-0 md:max-w-lg max-w-none max-lg:w-full">
+    <div className="relative flex flex-1 flex-shrink-0 lg:max-w-lg max-w-none max-lg:w-full">
       <Label htmlFor="search" className="sr-only">
         Arama
       </Label>
@@ -47,6 +46,15 @@ export default function Search({ placeholder }: { placeholder: string }) {
         icon={faMagnifyingGlass}
         size="lg"
         className={`absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-secondary-foreground`}
+      />
+      <FontAwesomeIcon
+        icon={faXmark}
+        size="lg"
+        onClick={() => {
+          handleSearch("");
+          setSearchTerm("");
+        }}
+        className={`absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-secondary-foreground cursor-pointer`}
       />
     </div>
   );
