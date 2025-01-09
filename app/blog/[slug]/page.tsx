@@ -6,6 +6,7 @@ import EditorsPick from "@/components/home/EditorsPick/EditorsPick";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { notFound } from "next/navigation";
+import { Metadata, ResolvingMetadata } from "next";
 
 interface Post {
   _id: string;
@@ -16,7 +17,12 @@ interface Post {
   readingTime: string;
   createdAt: string;
   content: string;
+  description: string;
 }
+
+type Props = {
+  params: Promise<{ slug: string }>;
+};
 
 async function getPost({ slug }: { slug: string }) {
   try {
@@ -33,6 +39,25 @@ async function getPost({ slug }: { slug: string }) {
   } catch (error: any) {
     notFound();
   }
+}
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const postSlug = (await params).slug;
+
+  const post = await getPost({ slug: postSlug });
+  const previousImages = (await parent).openGraph?.images || [];
+
+  const image = `/images/btc/btc-${post.imageNum}.jpeg`;
+  return {
+    title: post.titleTR,
+    description: post.description,
+    openGraph: {
+      images: [image, ...previousImages],
+    },
+  };
 }
 
 async function BlogPost({ slug }: { slug: string }) {
