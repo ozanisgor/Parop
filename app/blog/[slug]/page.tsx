@@ -58,12 +58,12 @@ export async function generateMetadata(
       // images: [image, ...previousImages],
       images: [
         {
-          url: `${process.env.NEXT_PUBLIC_API_URL}/blog/${postSlug}`,
+          url: `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-${post.imageNum}.jpeg`,
           width: 1200,
           height: 630,
         },
         {
-          url: `${process.env.NEXT_PUBLIC_API_URL}/blog/${postSlug}`,
+          url: `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-${post.imageNum}.jpeg`,
           width: 400,
           height: 400,
         },
