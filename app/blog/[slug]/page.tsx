@@ -57,11 +57,11 @@ export async function generateMetadata(
     openGraph: {
       // images: [image, ...previousImages],
       images: [
-        {
-          url: `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-${post.imageNum}.jpeg`,
-          width: 1200,
-          height: 630,
-        },
+        // {
+        //   url: `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-${post.imageNum}.jpeg`,
+        //   width: 1200,
+        //   height: 630,
+        // },
         {
           url: `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-${post.imageNum}.jpeg`,
           width: 400,
