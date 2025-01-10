@@ -55,7 +55,19 @@ export async function generateMetadata(
     title: post.titleTR,
     description: post.description,
     openGraph: {
-      images: [image, ...previousImages],
+      // images: [image, ...previousImages],
+      images: [
+        {
+          url: `${process.env.NEXT_PUBLIC_API_URL}/blog/${postSlug}`,
+          width: 1200,
+          height: 630,
+        },
+        {
+          url: `${process.env.NEXT_PUBLIC_API_URL}/blog/${postSlug}`,
+          width: 400,
+          height: 400,
+        },
+      ],
       type: "article",
       url: `${process.env.NEXT_PUBLIC_API_URL}/blog/${postSlug}`,
     },
