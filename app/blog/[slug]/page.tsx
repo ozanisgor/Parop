@@ -50,12 +50,14 @@ export async function generateMetadata(
   const post = await getPost({ slug: postSlug });
   const previousImages = (await parent).openGraph?.images || [];
 
-  const image = `/images/btc/btc-${post.imageNum}.jpeg`;
+  const image = `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-${post.imageNum}.jpeg`;
   return {
     title: post.titleTR,
     description: post.description,
     openGraph: {
       images: [image, ...previousImages],
+      type: "article",
+      url: `${process.env.NEXT_PUBLIC_API_URL}/${postSlug}`,
     },
   };
 }
