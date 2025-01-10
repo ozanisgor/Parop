@@ -57,7 +57,7 @@ export async function generateMetadata(
     openGraph: {
       images: [image, ...previousImages],
       type: "article",
-      url: `${process.env.NEXT_PUBLIC_API_URL}/${postSlug}`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/blog/${postSlug}`,
     },
   };
 }
