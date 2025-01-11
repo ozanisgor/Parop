@@ -45,7 +45,7 @@ export const FeaturedPost = async () => {
           </div>
           <div className="relative w-full 2xl:h-[40rem] xl:h-[36rem] lg:h-[32rem] md:h-[28rem] h-[24rem] max-w-screen-2xl mx-auto select-none">
             <Image
-              src={`/images/btc/btc-${imageNum}.jpeg`}
+              src={`/images/btc/btc-${imageNum}.webp`}
               alt="öne çıkan yazı resmi"
               fill
               placeholder="blur"

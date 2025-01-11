@@ -26,7 +26,7 @@ export const BlogHeader = ({ blogPost }: { blogPost: BlogHeaderProps }) => {
   return (
     <div className="relative top-0 left-0 w-full 2xl:h-[40rem] xl:h-[36rem] lg:h-[32rem] md:h-[28rem] h-[24rem] z-0 max-w-screen-2xl mx-auto select-none">
       <Image
-        src={`/images/btc/btc-${imageNum}.jpeg`}
+        src={`/images/btc/btc-${imageNum}.webp`}
         alt="blog header image"
         fill
         priority

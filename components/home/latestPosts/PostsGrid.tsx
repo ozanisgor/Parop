@@ -28,7 +28,7 @@ export const PostsGrid = ({ articles }: { articles: Post[] }) => {
                 <Link href={`/blog/${slug}`}>
                   {imageNum && (
                     <Image
-                      src={`/images/btc/btc-${imageNum}.jpeg`}
+                      src={`/images/btc/btc-${imageNum}.webp`}
                       width={300}
                       height={300}
                       alt="blog image"

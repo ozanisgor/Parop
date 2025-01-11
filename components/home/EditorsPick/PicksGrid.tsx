@@ -26,7 +26,7 @@ export const PicksGrid = ({ articles }: { articles: ArticleProps[] }) => {
           <div key={_id} className="flex flex-col gap-4 relative">
             <Link href={`/blog/${slug}`}>
               <Image
-                src={`/images/btc/btc-${imageNum}.jpeg`}
+                src={`/images/btc/btc-${imageNum}.webp`}
                 width={384}
                 height={384}
                 alt="blog"

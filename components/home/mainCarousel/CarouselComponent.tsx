@@ -72,7 +72,7 @@ export default function CarouselComponent({
             <CarouselItem key={_id}>
               <div className="relative top-0 left-0 w-full 2xl:h-[40rem] xl:h-[36rem] lg:h-[32rem] md:h-[28rem] h-[24rem] z-0 cursor-pointer">
                 <Image
-                  src={`/images/btc/btc-${imageNum}.jpeg`}
+                  src={`/images/btc/btc-${imageNum}.webp`}
                   alt={`${article.titleTR} blog resmi`}
                   fill
                   placeholder="blur"
