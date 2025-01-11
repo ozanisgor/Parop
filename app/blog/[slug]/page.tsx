@@ -6,7 +6,7 @@ import EditorsPick from "@/components/home/EditorsPick/EditorsPick";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { notFound } from "next/navigation";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 interface Post {
   _id: string;
@@ -41,32 +41,41 @@ async function getPost({ slug }: { slug: string }) {
   }
 }
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const postSlug = (await params).slug;
 
   const post = await getPost({ slug: postSlug });
-  const previousImages = (await parent).openGraph?.images || [];
 
-  const image = `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-${post.imageNum}.jpeg`;
+  const image = `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-${post.imageNum}.webp`;
   return {
     title: post.titleTR,
     description: post.description,
     openGraph: {
-      // images: [image, ...previousImages],
       images: [
         {
           url: image,
           width: 1200,
           height: 630,
+          alt: `${post.titleTR} blog resmi`,
         },
       ],
       title: post.titleTR,
       description: post.description,
       type: "website",
       url: `${process.env.NEXT_PUBLIC_API_URL}/blog/${postSlug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.titleTR,
+      description: post.description,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: `${post.titleTR} blog resmi`,
+        },
+      ],
     },
   };
 }
@@ -116,13 +125,7 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const slug = await params;
-  // const response = await fetch(
-  //   `${process.env.NEXT_PUBLIC_API_URL}/api/posts/${slug.slug}`
-  // );
 
-  // if (!response.ok) {
-  //   notFound();
-  // }
   return (
     <Suspense fallback={<Loading />}>
       <BlogPost slug={slug.slug} />
