@@ -6,6 +6,42 @@ import AllPostsSearch from "@/components/blog/AllPostsSearch";
 import AllPostsHeader from "@/components/blog/AllPostsHeader";
 import { Card } from "@/components/ui/card";
 import { Suspense } from "react";
+import { Metadata } from "next";
+
+const image = `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-5.webp`;
+
+export const metadata: Metadata = {
+  title: "Yazılar",
+  description: "Güncel Bitcoin gelişmeleri hakkında yazıların tümü",
+  referrer: "origin-when-cross-origin",
+  openGraph: {
+    images: [
+      {
+        url: image,
+        width: 1200,
+        height: 630,
+        alt: `Sayfanın bitcoin resmi`,
+      },
+    ],
+    title: "Yazılar",
+    description: "Güncel Bitcoin gelişmeleri hakkında yazıların tümü",
+    type: "website",
+    url: `${process.env.NEXT_PUBLIC_API_URL}/blog`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Yazılar",
+    description: "Güncel Bitcoin gelişmeleri hakkında yazıların tümü",
+    images: [
+      {
+        url: image,
+        width: 1200,
+        height: 630,
+        alt: `Sayfanın bitcoin resmi`,
+      },
+    ],
+  },
+};
 
 export default async function Blogpage(props: {
   searchParams?: Promise<{ q?: string; page?: string }>;

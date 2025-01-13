@@ -48,8 +48,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const image = `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-${post.imageNum}.webp`;
   return {
-    title: post.titleTR,
+    title: { absolute: post.titleTR },
     description: post.description,
+    keywords: post.tags,
+    referrer: "origin-when-cross-origin",
     openGraph: {
       images: [
         {
@@ -61,7 +63,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ],
       title: post.titleTR,
       description: post.description,
-      type: "website",
+      type: "article",
+      publishedTime: post.createdAt,
       url: `${process.env.NEXT_PUBLIC_API_URL}/blog/${postSlug}`,
     },
     twitter: {
