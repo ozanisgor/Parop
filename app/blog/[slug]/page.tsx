@@ -24,6 +24,8 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 async function getPost({ slug }: { slug: string }) {
   try {
     const res = await fetch(
@@ -135,17 +137,17 @@ export default async function Page({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "@id": `${process.env.NEXT_PUBLIC_URL}/blog/${postSlug}`,
-    mainEntityOfPage: `${process.env.NEXT_PUBLIC_URL}/blog/${postSlug}`,
+    "@id": `${url}/blog/${postSlug}`,
+    mainEntityOfPage: `${url}/blog/${postSlug}`,
     name: post.titleTR,
     description: post.description,
     datePublished: new Date(post.createdAt).toISOString(),
     headline: post.titleTR,
     author: {
       "@type": "Organization",
-      "@id": `${process.env.NEXT_PUBLIC_URL}`,
+      "@id": url,
       name: "iBlogger",
-      url: `${process.env.NEXT_PUBLIC_URL}`,
+      url: url,
       // "image": {
       //     "@type": "ImageObject",
       //     "@id": "https://secure.gravatar.com/avatar/bbdd78abba6116d6f5bfa2c992de6592?s=96&d=mm&r=g",
@@ -156,9 +158,9 @@ export default async function Page({
     },
     publisher: {
       "@type": "Organization",
-      "@id": `${process.env.NEXT_PUBLIC_URL}`,
+      "@id": url,
       name: "iBlogger",
-      url: `${process.env.NEXT_PUBLIC_URL}`,
+      url: url,
       // "logo": {
       //     "@type": "ImageObject",
       //     "@id": "https://dataliberate.com/wp-content/uploads/2011/12/Data_Liberate_Logo-200.png",
@@ -174,14 +176,14 @@ export default async function Page({
       height: "630",
       width: "1200",
     },
-    url: `${process.env.NEXT_PUBLIC_URL}/blog/${postSlug}`,
+    url: `${url}/blog/${postSlug}`,
     isPartOf: {
       "@type": "Blog",
-      "@id": `${process.env.NEXT_PUBLIC_URL}/blog`,
+      "@id": `${url}/blog`,
       name: "iBlogger",
       publisher: {
         "@type": "Organization",
-        "@id": `${process.env.NEXT_PUBLIC_URL}`,
+        "@id": url,
         name: "iBlogger",
       },
     },
