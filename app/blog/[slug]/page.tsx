@@ -127,11 +127,89 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const slug = await params;
+  const postSlug = (await params).slug;
+
+  const post = await getPost({ slug: postSlug });
+  const image = `${process.env.NEXT_PUBLIC_API_URL}/images/btc/btc-${post.imageNum}.webp`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${process.env.NEXT_PUBLIC_URL}/blog/${postSlug}`,
+    mainEntityOfPage: `${process.env.NEXT_PUBLIC_URL}/blog/${postSlug}`,
+    name: post.titleTR,
+    description: post.description,
+    datePublished: new Date(post.createdAt).toISOString(),
+    headline: post.titleTR,
+    author: {
+      "@type": "Organization",
+      "@id": `${process.env.NEXT_PUBLIC_URL}`,
+      name: "iBlogger",
+      url: `${process.env.NEXT_PUBLIC_URL}`,
+      // "image": {
+      //     "@type": "ImageObject",
+      //     "@id": "https://secure.gravatar.com/avatar/bbdd78abba6116d6f5bfa2c992de6592?s=96&d=mm&r=g",
+      //     "url": "https://secure.gravatar.com/avatar/bbdd78abba6116d6f5bfa2c992de6592?s=96&d=mm&r=g",
+      //     "height": "96",
+      //     "width": "96"
+      // }
+    },
+    publisher: {
+      "@type": "Organization",
+      "@id": `${process.env.NEXT_PUBLIC_URL}`,
+      name: "iBlogger",
+      url: `${process.env.NEXT_PUBLIC_URL}`,
+      // "logo": {
+      //     "@type": "ImageObject",
+      //     "@id": "https://dataliberate.com/wp-content/uploads/2011/12/Data_Liberate_Logo-200.png",
+      //     "url": "https://dataliberate.com/wp-content/uploads/2011/12/Data_Liberate_Logo-200.png",
+      //     "width": "600",
+      //     "height": "60"
+      // }
+    },
+    image: {
+      "@type": "ImageObject",
+      "@id": image,
+      url: [image],
+      height: "630",
+      width: "1200",
+    },
+    url: `${process.env.NEXT_PUBLIC_URL}/blog/${postSlug}`,
+    isPartOf: {
+      "@type": "Blog",
+      "@id": `${process.env.NEXT_PUBLIC_URL}/blog`,
+      name: "iBlogger",
+      publisher: {
+        "@type": "Organization",
+        "@id": `${process.env.NEXT_PUBLIC_URL}`,
+        name: "iBlogger",
+      },
+    },
+    keywords: post.tags,
+    // publisher: {
+    //   "@type": "Organization",
+    //   "@id": "https://dataliberate.com",
+    //   name: "Data Liberate",
+    //   logo: {
+    //     "@type": "ImageObject",
+    //     "@id":
+    //       "https://dataliberate.com/wp-content/uploads/2011/12/Data_Liberate_Logo-200.png",
+    //     url: "https://dataliberate.com/wp-content/uploads/2011/12/Data_Liberate_Logo-200.png",
+    //     width: "600",
+    //     height: "60",
+    //   },
+    // },
+  };
 
   return (
-    <Suspense fallback={<Loading />}>
-      <BlogPost slug={slug.slug} />
-    </Suspense>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Suspense fallback={<Loading />}>
+        <BlogPost slug={postSlug} />
+      </Suspense>
+    </>
   );
 }
