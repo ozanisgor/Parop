@@ -27,6 +27,8 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import logo from "@/public/images/parop-logo-golden.webp";
 
 const components: {
   title: string;
@@ -107,7 +109,7 @@ export function MobileNav() {
             className="text-primary-foreground hover:text-secondary-foreground cursor-pointer w-8"
           />
           <Link href={"/"} className="">
-            Logo
+            <Image src={logo} alt="Parop Logo" className="w-20" />
           </Link>
           <Drawer open={open} onOpenChange={onOpenChange}>
             <DrawerTrigger asChild className="">

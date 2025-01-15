@@ -161,13 +161,13 @@ export default async function Page({
       "@id": url,
       name: "iBlogger",
       url: url,
-      // "logo": {
-      //     "@type": "ImageObject",
-      //     "@id": "https://dataliberate.com/wp-content/uploads/2011/12/Data_Liberate_Logo-200.png",
-      //     "url": "https://dataliberate.com/wp-content/uploads/2011/12/Data_Liberate_Logo-200.png",
-      //     "width": "600",
-      //     "height": "60"
-      // }
+      logo: {
+        "@type": "ImageObject",
+        "@id": `${url}/public/images/parop-logo-golden.webp`,
+        url: `${url}/public/images/parop-logo-golden.webp`,
+        width: "600",
+        height: "60",
+      },
     },
     image: {
       "@type": "ImageObject",
@@ -188,19 +188,6 @@ export default async function Page({
       },
     },
     keywords: post.tags,
-    // publisher: {
-    //   "@type": "Organization",
-    //   "@id": "https://dataliberate.com",
-    //   name: "Data Liberate",
-    //   logo: {
-    //     "@type": "ImageObject",
-    //     "@id":
-    //       "https://dataliberate.com/wp-content/uploads/2011/12/Data_Liberate_Logo-200.png",
-    //     url: "https://dataliberate.com/wp-content/uploads/2011/12/Data_Liberate_Logo-200.png",
-    //     width: "600",
-    //     height: "60",
-    //   },
-    // },
   };
 
   return (

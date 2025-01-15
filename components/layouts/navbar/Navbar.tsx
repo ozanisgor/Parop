@@ -11,6 +11,8 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/public/images/parop-logo-golden.webp";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,7 +36,7 @@ export const Navbar = () => {
       <div className={`${isScrolled ? "bg-primary" : "bg-transparent/40"}  `}>
         <div className="max-w-screen-2xl mx-auto flex justify-between items-center w-full px-16 py-7 lg:h-20 md:h-14">
           <Link href={"/"} className="">
-            Logo
+            <Image src={logo} alt="Parop Logo" className="max-lg:w-20" />
           </Link>
           <div className="flex items-center">
             <div>
