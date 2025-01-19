@@ -146,7 +146,7 @@ export default async function Page({
     author: {
       "@type": "Organization",
       "@id": url,
-      name: "iBlogger",
+      name: "Parop",
       url: url,
       // "image": {
       //     "@type": "ImageObject",
@@ -159,7 +159,7 @@ export default async function Page({
     publisher: {
       "@type": "Organization",
       "@id": url,
-      name: "iBlogger",
+      name: "Parop",
       url: url,
       logo: {
         "@type": "ImageObject",
@@ -180,11 +180,11 @@ export default async function Page({
     isPartOf: {
       "@type": "Blog",
       "@id": `${url}/blog`,
-      name: "iBlogger",
+      name: "Parop",
       publisher: {
         "@type": "Organization",
         "@id": url,
-        name: "iBlogger",
+        name: "Parop",
       },
     },
     keywords: post.tags,
