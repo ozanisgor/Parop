@@ -220,36 +220,39 @@ const extractTitleFromContent = (content: string): string => {
   return title;
 };
 
-const createSlug = (title: string | null): string | null => {
+const createSlug = (title: string): string => {
   console.log("Creating slug...");
 
-  if (!title) return null;
-
   const turkishMap: { [key: string]: string } = {
-    ç: "c",
-    ğ: "g",
     ı: "i",
-    ö: "o",
-    ş: "s",
+    ğ: "g",
     ü: "u",
-    Ç: "C",
-    Ğ: "G",
-    İ: "I",
-    Ö: "O",
-    Ş: "S",
-    Ü: "U",
+    ş: "s",
+    ö: "o",
+    ç: "c",
+    İ: "i",
+    Ğ: "g",
+    Ü: "u",
+    Ş: "s",
+    Ö: "o",
+    Ç: "c",
   };
 
-  const slug = title
+  return title
+    .toLowerCase()
+    .trim()
     .split("")
     .map((char) => turkishMap[char] || char)
     .join("")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "");
-
-  return slug;
+    .normalize("NFD") // normalize unicode characters
+    .replace(/[\u0300-\u036f]/g, "") // remove diacritics/accents
+    .replace(/[^a-z0-9\s-]/g, "") // remove special chars except spaces and hyphens
+    .replace(/\s+/g, "-") // replace spaces with hyphens
+    .replace(/-+/g, "-") // remove consecutive hyphens
+    .replace(/^-+/, "") // remove leading hyphens
+    .replace(/-+$/, ""); // remove trailing hyphens
 };
+
 const wait = async () => {
   const getRandomWaitTime =
     Math.floor(Math.random() * (4000 - 5000 + 1)) + 4000;
