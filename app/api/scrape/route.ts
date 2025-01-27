@@ -10,6 +10,7 @@ import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
 import "dotenv/config";
 
+export const maxDuration = 60;
 export const dynamic = "force-dynamic"; // Ensures this route is dynamic
 export const revalidate = 0; // Disables caching
 
