@@ -75,6 +75,7 @@ export default function CarouselComponent({
                   src={`/images/btc/btc-${imageNum}.webp`}
                   alt={`${article.titleTR} blog resmi`}
                   fill
+                  priority={index === 0}
                   placeholder="blur"
                   blurDataURL={
                     blurPlaceholders[imageNum as keyof typeof blurPlaceholders]
