@@ -25,7 +25,10 @@ export const Footer = () => {
         <div className="max-w-screen-2xl mx-auto flex justify-between h-20 md:px-16 px-8 py-8 items-center">
           <p className="flex justify-start gap-2 text-sm font-bold">
             2024 | Ozan İşgör{" "}
-            <Link href={"https://github.com/ozanisgor"}>
+            <Link
+              href={"https://github.com/ozanisgor"}
+              aria-label="Visit Ozan İşgör's GitHub profile"
+            >
               <FontAwesomeIcon
                 icon={faGithub}
                 size="lg"
