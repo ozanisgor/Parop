@@ -9,7 +9,7 @@ import { Footer } from "@/components/layouts/footer/Footer";
 import { MobileNav } from "@/components/layouts/navbar/MobileNavbar";
 config.autoAddCss = false;
 
-const lora = Lora({ subsets: ["latin"] });
+const lora = Lora({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   title: {
