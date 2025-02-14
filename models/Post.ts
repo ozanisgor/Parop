@@ -6,6 +6,7 @@ interface IPost extends Document {
   content: string;
   link: string;
   slug: string;
+  description: string;
 }
 
 const postSchema: Schema = new mongoose.Schema(
@@ -20,7 +21,12 @@ const postSchema: Schema = new mongoose.Schema(
     },
     content: {
       type: String,
-      required: false,
+      required: true,
+    },
+    tags: {
+      type: [String],
+      required: true,
+      default: [],
     },
     link: {
       type: String,
@@ -29,6 +35,27 @@ const postSchema: Schema = new mongoose.Schema(
     slug: {
       type: String,
       required: true,
+    },
+    description: {
+      type: String,
+      required: [true, "Description missing"],
+    },
+    imageNum: {
+      type: Number,
+      required: true,
+    },
+    readingTime: {
+      type: String,
+      required: true,
+      default: "1 dakika",
+    },
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
+    isEditorsPick: {
+      type: Boolean,
+      default: false,
     },
     // TODO: image upload
   },

@@ -10,6 +10,7 @@ import Post from "@/models/Post";
 import connect from "@/app/api/mongodb";
 import "dotenv/config";
 
+export const maxDuration = 60;
 export const dynamic = "force-dynamic"; // Ensures this route is dynamic
 export const revalidate = 0; // Disables caching
 
@@ -70,9 +71,32 @@ const processWithGemini = async (scrapedContent: string) => {
   console.log("Processing with Gemini...");
   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
-  const prompt = `Read this '${scrapedContent}' ${process.env.PROMPT}`;
+  const prompt = `Read this news content: '${scrapedContent}' ${process.env.PROMPT}`;
   const result = await model.generateContent(prompt);
-  return result.response.text();
+  const responseText = result.response.text();
+  console.log("Raw response from Gemini:", responseText);
+
+  try {
+    const cleanResponse = responseText
+      .replace(/```json\n?/g, "")
+      .replace(/```\n?/g, "")
+      .trim();
+    console.log("Cleaned response:", cleanResponse);
+    const parsedResponse = JSON.parse(cleanResponse);
+    if (!parsedResponse.content || !parsedResponse.tags) {
+      throw new Error("Invalid response structure from Gemini");
+    }
+    return parsedResponse;
+  } catch (error) {
+    console.error("Error parsing Gemini response:", error);
+    console.error("Raw response:", responseText);
+
+    return {
+      content: scrapedContent,
+      tags: ["genel"],
+      title: "Yeni Makale",
+    };
+  }
 };
 const updateArticles = async () => {
   try {
@@ -94,11 +118,11 @@ const updateArticles = async () => {
 
     for (const scrapedArticle of scrapedArticles) {
       const found = existingArticles.some(
-        (article) => article.title === scrapedArticle.title
+        (article) => article.link === scrapedArticle.href
       );
       if (!found) {
         console.log(
-          `New article found: ${scrapedArticle.title}, scraping content...`
+          `New article found: ${scrapedArticle.href}, scraping content...`
         );
         const browser = await puppeteer.launch({
           args: [...chromium.args, "--no-sandbox"],
@@ -120,19 +144,31 @@ const updateArticles = async () => {
         ).each((index, element) => {
           scrapedContent.push($(element).text().trim());
         });
+        console.log("Scraped content: ", scrapedContent);
+
         await browser.close();
         const newContent = await processWithGemini(scrapedContent.join("\n"));
-        const newTitle = extractTitle(newContent);
+        console.log(newContent, "newContent");
+        const newTitle = extractTitleFromContent(newContent.content);
         const newSlug = createSlug(newTitle);
-        await Post.create({
-          title: scrapedArticle.title,
-          titleTR: newTitle,
-          content: newContent,
-          link: scrapedArticle.href,
-          slug: newSlug,
-        });
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
+        try {
+          await Post.create({
+            title: scrapedArticle.title,
+            titleTR: newTitle,
+            content: newContent.content,
+            tags: newContent.tags,
+            description: newContent.description,
+            link: scrapedArticle.href,
+            slug: newSlug,
+            imageNum: randomNumber,
+            readingTime: newContent.readingTime,
+          });
+        } catch (error: any) {
+          console.error("Error saving post:", error);
+        }
       } else {
-        console.log(`Article already exists: ${scrapedArticle.title}`);
+        console.log(`Article already exists: ${scrapedArticle.href}`);
       }
     }
   } catch (error) {
@@ -167,16 +203,57 @@ export async function GET() {
     );
   }
 }
-const extractTitle = (content: string): string | null => {
-  const titleRegex = /^## (.*?)\n\n/;
-  const match = content.match(titleRegex);
-  return match ? match[1] : null;
+const extractTitleFromContent = (content: string): string => {
+  console.log("Extracting title from markdown content...");
+
+  // Match both ## Title and ##Title formats
+  const h1Match = content.match(/^##\s*([^\n]+)/m);
+
+  if (!h1Match) {
+    console.log("No title found in content, using default");
+    throw new Error(
+      "No title found in content. Blog post cannot be created without a title."
+    );
+  }
+
+  const title = h1Match[1].trim();
+  console.log("Extracted title:", title);
+  return title;
 };
-const createSlug = (title: string | null): string | null => {
-  if (!title) return null;
-  title = title.replace(/['".,]/g, "");
-  return title.toLowerCase().replace(/\s+/g, "-");
+
+const createSlug = (title: string): string => {
+  console.log("Creating slug...");
+
+  const turkishMap: { [key: string]: string } = {
+    ı: "i",
+    ğ: "g",
+    ü: "u",
+    ş: "s",
+    ö: "o",
+    ç: "c",
+    İ: "i",
+    Ğ: "g",
+    Ü: "u",
+    Ş: "s",
+    Ö: "o",
+    Ç: "c",
+  };
+
+  return title
+    .toLowerCase()
+    .trim()
+    .split("")
+    .map((char) => turkishMap[char] || char)
+    .join("")
+    .normalize("NFD") // normalize unicode characters
+    .replace(/[\u0300-\u036f]/g, "") // remove diacritics/accents
+    .replace(/[^a-z0-9\s-]/g, "") // remove special chars except spaces and hyphens
+    .replace(/\s+/g, "-") // replace spaces with hyphens
+    .replace(/-+/g, "-") // remove consecutive hyphens
+    .replace(/^-+/, "") // remove leading hyphens
+    .replace(/-+$/, ""); // remove trailing hyphens
 };
+
 const wait = async () => {
   const getRandomWaitTime =
     Math.floor(Math.random() * (4000 - 5000 + 1)) + 4000;
