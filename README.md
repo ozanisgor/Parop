@@ -1,4 +1,4 @@
-# Parop - Bitcoin News Blog
+# Parop - Crypto News Blog
 
 A modern, responsive Crypto news blog in Turkish built with Next.js 14, featuring automatic web scraping, AI-powered content generation, and MongoDB integration.
 
@@ -50,13 +50,15 @@ npm install
 yarn install
 ```
 
-3. Set up environment variables:
+3. Set up environment variables(Some of them targeted website specific):
    Create a `.env.local` file in the root directory with the following variables:
 
 ```env
 MONGO_URI=your_mongodb_connection_string
 GOOGLE_API_KEY=your_gemini_ai_api_key
 SOURCE_URL=your_source_url_for_web_scraping
+CRON_JOB_SECRET_TOKEN=access_token_for_scrape
+ALLOWED_IPS=allowed_ip_addresses_for_scraping
 NEXT_PUBLIC_API_URL=your_api_url
 TAG=tag_for_filtering_scrape_content
 PROMPT=your_ai_prompt_configuration
@@ -72,21 +74,18 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Project Structure
-
-- `/app` - Next.js app router pages and API routes
-- `/components` - Reusable UI components
-- `/lib` - Utility functions and helpers
-- `/models` - MongoDB/Mongoose models
-- `/public` - Static assets
-- `/styles` - Global styles and Tailwind configuration
-
 ## API Routes
 
 - `GET /api/posts` - Fetch all blog posts
 - `GET /api/posts/:slug` - Fetch single post
 - `GET /api/featured` - Fetch featured posts
 - `GET /api/scrape` - Trigger web scraping and content generating
+
+To send request from terminal with access token
+
+```bash
+curl -H "x-cron-job-token: your_created_access_token" http://localhost:3000/api/scrape
+```
 
 ## Features in Detail
 
