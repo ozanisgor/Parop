@@ -13,12 +13,14 @@ interface Post {
 export const PostsGrid = ({ articles }: { articles: Post[] }) => {
   return (
     <div className="flex flex-col gap-2">
-      <Link
-        href={"/blog"}
-        className="flex mb-2 text-sm sm:justify-end justify-center h-7 bg-primary-foreground items-center rounded-full text-center font-medium text-muted-foreground transition-colors hover:text-secondary-foreground data-[active=true]:bg-transparent data-[active=true]:text-secondary-foreground w-full px-2"
-      >
-        Hepsini İncele
-      </Link>
+      <div className="flex mb-2 text-sm sm:justify-end justify-center h-7 bg-primary-foreground items-center rounded-full text-center font-medium  px-2">
+        <Link
+          href={"/blog"}
+          className="text-primary transition-colors hover:text-secondary-foreground data-[active=true]:bg-transparent data-[active=true]:text-secondary-foreground"
+        >
+          Hepsini İncele
+        </Link>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-y-14 gap-y-20">
         {articles &&
           articles.map((article) => {

@@ -11,8 +11,18 @@ import connect from "@/app/api/mongodb";
 import "dotenv/config";
 
 export const maxDuration = 60;
-export const dynamic = "force-dynamic"; // Ensures this route is dynamic
-export const revalidate = 0; // Disables caching
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+const SECRET_TOKEN = process.env.CRON_JOB_SECRET_TOKEN;
+const ALLOWED_IPS = process.env.ALLOWED_IPS?.split(",") || [];
+
+const normalizeIp = (ip: string) => {
+  if (ip.startsWith("::ffff:")) {
+    return ip.replace("::ffff:", "");
+  }
+  return ip;
+};
 
 puppeteer.use(StealthPlugin());
 
@@ -175,8 +185,36 @@ const updateArticles = async () => {
     console.error("Error updating articles:", error);
   }
 };
-export async function GET() {
+export async function GET(request: NextRequest) {
   console.log("GET request received, starting updateArticles...");
+
+  const clientIp = request.headers.get("x-forwarded-for") || request.ip || "";
+  const normalizedIp = normalizeIp(clientIp);
+  const authToken = request.headers.get("x-cron-job-token");
+
+  console.log("Client IP:", clientIp);
+  console.log("Normalized IP:", normalizedIp);
+
+  if (!process.env.ALLOWED_IPS || !process.env.CRON_JOB_SECRET_TOKEN) {
+    return NextResponse.json(
+      { status: "error", message: "Server configuration error." },
+      { status: 500 }
+    );
+  }
+
+  if (!ALLOWED_IPS.includes(normalizedIp)) {
+    return NextResponse.json(
+      { status: "error", message: "Access denied. Invalid IP." },
+      { status: 403 }
+    );
+  }
+
+  if (authToken !== SECRET_TOKEN) {
+    return NextResponse.json(
+      { status: "error", message: "Access denied. Invalid token." },
+      { status: 403 }
+    );
+  }
 
   try {
     await updateArticles();
