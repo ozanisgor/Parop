@@ -1,6 +1,6 @@
 # Parop - Crypto News Blog
 
-A modern, responsive Crypto news blog in Turkish built with Next.js 14, featuring automatic web scraping, AI-powered content generation, and MongoDB integration.
+A fully automated modern, responsive Crypto news blog in Turkish built with Next.js, featuring web scraping, AI-powered content generation.
 
 ## Features
 
