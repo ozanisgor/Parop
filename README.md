@@ -1,4 +1,4 @@
-# Parop - Crypto News Blog
+# Parop - Automated AI Driven Crypto Blog
 
 A fully automated, AI driven full-stack crypto blog using Next.js. Implemented web scraping with Puppeteer to gather the latest crypto news. The scraped content is then processed by Google's Generative AI (Gemini) to generate fresh, SEO-optimized articles in Turkish. Using a cron job, the entire process is automated and runs frequently, ensuring the blog remains fully up-to-date with the latest trends and news. Leveraged server-side rendering (SSR) and dynamic routing for optimal performance and search engine visibility. Designed a mobile-first UI/UX with Tailwind CSS and Shadcn/UI reusable components for a better user experience.
 
