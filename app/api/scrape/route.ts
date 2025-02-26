@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import mongoose from "mongoose";
 import chromium from "@sparticuz/chromium-min";
 import puppeteer from "puppeteer-extra";
-// import puppeteer from "puppeteer-core";
 import cheerio from "cheerio";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -43,7 +41,7 @@ const scrapeArticles = async () => {
     args: [...chromium.args, "--no-sandbox"],
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(
-      "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar"
+      process.env.CHROMIUM_EXECUTABLE_PATH
     ),
     headless: chromium.headless,
   });
@@ -191,9 +189,6 @@ export async function GET(request: NextRequest) {
   const clientIp = request.headers.get("x-forwarded-for") || request.ip || "";
   const normalizedIp = normalizeIp(clientIp);
   const authToken = request.headers.get("x-cron-job-token");
-
-  console.log("Client IP:", clientIp);
-  console.log("Normalized IP:", normalizedIp);
 
   if (!process.env.ALLOWED_IPS || !process.env.CRON_JOB_SECRET_TOKEN) {
     return NextResponse.json(
