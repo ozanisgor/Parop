@@ -78,9 +78,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## API Routes
 
-- `GET /api/posts` - Fetch all blog posts
-- `GET /api/posts/:slug` - Fetch single post
-- `GET /api/featured` - Fetch featured posts
+- `GET /api/posts/all` - Fetch all blog posts
+- `GET /api/posts/latest` - Fetch latest blog posts
+- `GET /api/posts/featured` - Fetch featured posts
+- `GET /api/posts/editors-picks` - Fetch editor's picked posts
+- `GET /api/posts/:slug` - Fetch a single post
 - `GET /api/scrape` - Trigger web scraping and content generating
 
 To send request from terminal with access token
