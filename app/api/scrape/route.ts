@@ -136,7 +136,7 @@ const updateArticles = async () => {
           args: [...chromium.args, "--no-sandbox"],
           defaultViewport: chromium.defaultViewport,
           executablePath: await chromium.executablePath(
-            "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar"
+            process.env.CHROMIUM_EXECUTABLE_PATH
           ),
           headless: chromium.headless,
         });
